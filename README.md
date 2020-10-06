@@ -12,7 +12,13 @@
 
 ![Mockup perfil del admin](https://i.imgur.com/XtqAi1m.png)
 
+## Mockup provisional de la página de registro
 
+![Mockup perfil del registro](https://i.imgur.com/6XkkmM4.png)
+
+## Mockup provisional de la página principal
+
+![Mockup página principal](https://i.imgur.com/Ohmos36.png)
 
 # Trabajo en desarrollo
 
