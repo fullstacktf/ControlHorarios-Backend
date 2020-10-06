@@ -2,12 +2,18 @@
 
 ## Mockup provisional de la página de usuario
 
-![alt text](https://i.imgur.com/dNiUrKb.png)
+![Mockup perfil usuario](https://i.imgur.com/dNiUrKb.png)
 
 ## Mockup provisional de la página principal de admin
 
-![alt text](https://i.imgur.com/Y1XH2eK.png)
+![Mockup perfil admin](https://i.imgur.com/Y1XH2eK.png)
 
 ## Mockup provisional de la página principal de admin (Vista de proyecto)
 
-![alt text](https://i.imgur.com/XtqAi1m.png)
+![Mockup perfil del admin](https://i.imgur.com/XtqAi1m.png)
+
+
+
+# Trabajo en desarrollo
+
+![Trabajo en desarrollo](/src/assets/desarrollo.png)
