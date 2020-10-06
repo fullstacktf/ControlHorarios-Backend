@@ -16,4 +16,4 @@
 
 # Trabajo en desarrollo
 
-![Trabajo en desarrollo](/src/assets/desarrollo.png)
+![Trabajo en desarrollo](/src/desarrollo.png)
