@@ -1,0 +1,20 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend of the schedule management project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fullstacktf/ControlHorarios-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fullstacktf/ControlHorarios-Backend/issues"
+  },
+  "homepage": "https://github.com/fullstacktf/ControlHorarios-Backend#readme"
+}
