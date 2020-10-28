@@ -3,7 +3,7 @@ services:
   server:
     build:
       context: ./backend
-      dockerfile: "node-12.19.0.dockerfile"
+      dockerfile: "dockerfile"
     container_name: "app_node"
     ports:
       - "8080:80"
