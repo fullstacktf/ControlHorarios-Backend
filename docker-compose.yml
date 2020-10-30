@@ -22,7 +22,15 @@ services:
       - MYSQL_PASSWORD=root
     networks:
       - backend
-
+  web:
+    build: 
+      context: ../ControlHorarios-Frontend 
+      dockerfile: "Dockerfile"
+    container_name: "nginx"
+    ports:
+      - "80:80"
+    networks: 
+      - backend
 networks:
   backend:
     name: app_backend
