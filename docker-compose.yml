@@ -4,7 +4,7 @@ services:
     build:
       context: ./backend
       dockerfile: "dockerfile"
-    container_name: "app_node"
+    container_name: "app_go"
     ports:
       - "8080:80"
     depends_on:
@@ -23,13 +23,13 @@ services:
     networks:
       - backend
   web:
-    build: 
-      context: ../ControlHorarios-Frontend 
+    build:
+      context: ../ControlHorarios-Frontend
       dockerfile: "Dockerfile"
     container_name: "nginx"
     ports:
       - "80:80"
-    networks: 
+    networks:
       - backend
 networks:
   backend:
