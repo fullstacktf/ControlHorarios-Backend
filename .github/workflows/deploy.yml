@@ -60,7 +60,13 @@ jobs:
           source: "./docker-compose.yml"
           target: "docker-compose-back"
 
-      - name: Run docker-compose
-        run: |
-          docker-compose rm -s
-          docker-compose up -d
+      - name: Run docker-compose SSH command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: | 
+              cd docker-compose-back
+              docker-compose rm -s
+              docker-compose up -d
