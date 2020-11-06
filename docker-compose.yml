@@ -2,8 +2,7 @@ version: "3.7"
 services:
   server:
     build:
-      context: ./backend
-      dockerfile: "dockerfile"
+      context: flipday/backend
     container_name: "app_go"
     ports:
       - "8080:80"
