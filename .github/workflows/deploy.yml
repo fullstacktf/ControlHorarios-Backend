@@ -59,5 +59,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: | 
+              ls -lh
               docker-compose rm -s
               docker-compose up
