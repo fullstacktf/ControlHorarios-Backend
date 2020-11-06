@@ -2,7 +2,7 @@ version: "3.7"
 services:
   server:
     build:
-      context: flipday/backend
+      image: flipday/backend
     container_name: "app_go"
     ports:
       - "8080:80"
@@ -21,15 +21,7 @@ services:
       - MYSQL_PASSWORD=root
     networks:
       - backend
-  web:
-    build:
-      context: ../ControlHorarios-Frontend
-      dockerfile: "Dockerfile"
-    container_name: "nginx"
-    ports:
-      - "80:80"
-    networks:
-      - backend
+      
 networks:
   backend:
     name: app_backend
