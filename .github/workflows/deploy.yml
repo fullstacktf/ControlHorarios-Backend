@@ -59,7 +59,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           source: "./docker-compose.yml"
-          target: "test"
+          target: "./home/test"
 
       - name: Run docker-compose
         run: |
