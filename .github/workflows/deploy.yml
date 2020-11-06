@@ -52,13 +52,16 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2 
       
-      - name: SSH command
-        uses: appleboy/ssh-action@master
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          script: | 
-              ls -lh
+          source: "./docker-compose.yml"
+          target: "test"
+
+      - name: Run docker-compose
+        run: |
               docker-compose rm -s
-              docker-compose up
+              docker-compose up -d
