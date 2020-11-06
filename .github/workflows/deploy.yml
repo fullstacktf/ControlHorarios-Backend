@@ -59,9 +59,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           source: "./docker-compose.yml"
-          target: "./home/test"
+          target: "docker-compose-back"
 
       - name: Run docker-compose
         run: |
-              docker-compose rm -s
+              docker-compose down
               docker-compose up -d
