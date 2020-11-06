@@ -62,6 +62,5 @@ jobs:
 
       - name: Run docker-compose
         run: |
-          cd root/home/test 
           docker-compose rm -s
           docker-compose up -d
