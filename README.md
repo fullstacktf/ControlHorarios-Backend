@@ -21,8 +21,7 @@
 | /api/company/login         | POST    |
 | /api/company/settings/{id} | POST    |
 | /api/company/settings/{id} | GET     |
-| /api/company/calendar      | POST    |
-| /api/company/calendar      | GET     |
+
 
 ### Employee
 
@@ -32,11 +31,18 @@
 |-----------------------------|---------|
 | /api/employee/login         | POST    |
 | /api/employee/{id}          | GET     |
-| /api/employee/calendar/{id} | GET     |
 | /api/employee/summary/{id}  | GET     |
-| /api/employee/settings/{id} | GET     |
-| /api/employee/settings/{id} | POST    |
+| /api/employee               | POST    |
+| /api/employee/password/{id} | PUT     |
+| /api/employee/checkin/{id}  | POST    |
+| /api/employee/checkout/{id} | POST    |
 
+### Holidays
+
+| URI                        | Request |
+|----------------------------|---------|
+| /api/company/holidays/{id} | POST    |
+| /api/company/holidays/{id} | GET     |
 
 ## Database Schema
 
