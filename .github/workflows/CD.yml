@@ -1,8 +1,8 @@
-name: deploy
-#on:
-  #push:
-   # branches:
-    #  - workflows
+name: CD
+on:
+  push:
+    branches:
+      - testcd
 jobs:
   build-docker:
     runs-on: ubuntu-latest
