@@ -2,7 +2,7 @@ name: CD
 on:
   push:
     branches:
-      - testcd
+      - main
 jobs:
   build-docker:
     runs-on: ubuntu-latest
