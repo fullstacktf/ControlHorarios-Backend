@@ -1,7 +1,7 @@
 package main
 
 import (
-	"../api/models"
+	"github.com/fullstacktf/ControlHorarios-Backend/backend/api/models"
 
 	"github.com/gin-gonic/gin"
 )
