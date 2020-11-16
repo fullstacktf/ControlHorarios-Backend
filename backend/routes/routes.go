@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/models"
+
 	"github.com/gin-gonic/gin"
 )
 
