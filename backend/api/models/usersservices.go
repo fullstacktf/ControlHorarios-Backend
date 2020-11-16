@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/fullstacktf/ControlHorarios-Backend/backend/api/infrastructure"
+	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/infrastructure"
 	"github.com/gin-gonic/gin"
 )
 

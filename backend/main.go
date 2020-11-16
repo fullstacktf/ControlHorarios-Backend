@@ -1,15 +1,9 @@
 package main
 
 import (
-	"github.com/fullstacktf/ControlHorarios-Backend/backend/api/models"
-
-	"github.com/gin-gonic/gin"
+	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/routes"
 )
 
 func main() {
-	r := gin.Default()
-	var userServices models.UsersServices
-	r.GET("/users", userServices.GetUsers)
-
-	r.Run(":8989")
+	routes.SetupRouter().Run()
 }
