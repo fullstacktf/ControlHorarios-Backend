@@ -1,6 +1,9 @@
 package infrastructure
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type UsersRepository struct{}
 
@@ -15,5 +18,6 @@ func (c UsersRepository) GetUsers() []byte {
 		"hola",
 	}
 	j, _ := json.Marshal(users)
+	fmt.Println(j)
 	return j
 }

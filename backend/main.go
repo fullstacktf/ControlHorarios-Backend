@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	routes.SetupRouter().Run()
+	routes.SetupRouter().Run(":8989")
 }

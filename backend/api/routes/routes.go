@@ -11,7 +11,7 @@ func SetupRouter() *gin.Engine {
 	var userServices models.UsersServices
 	v1 := r.Group("/v1")
 	{
-		r.GET("/users", userServices.GetUsers)
+		v1.GET("/users", userServices.GetUsers)
 	}
 	return r
 }
