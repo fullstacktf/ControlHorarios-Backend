@@ -3,3 +3,6 @@ WORKDIR /app
 COPY . /app
 EXPOSE 80
 CMD ["go", "run","src/main.go"]
+
+
+
