@@ -52,7 +52,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           source: "./database"
-          target: "docker-compose-back/database"
+          target: "docker-compose-back"
 
       - name: Run docker-compose SSH command
         uses: appleboy/ssh-action@master
