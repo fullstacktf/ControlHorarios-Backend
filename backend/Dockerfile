@@ -1,11 +1,9 @@
 FROM golang:1.15.3-alpine
-ENV GO111MODULE=on
+ENV GO111MODULE=auto
 WORKDIR /app
 COPY . /app
-RUN go get ./...
-RUN go build
 EXPOSE 80
-CMD ["go", "run","src/main.go"]
+CMD ["go","run","main.go"]
 
 
 
