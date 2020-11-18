@@ -1,5 +1,20 @@
 version: "3.7"
 services:
+  db:
+    image: mariadb:10.5.6 
+    container_name: "projectdb"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABE=database
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=root
+    
+    volumes: 
+      - "./mysql_data:/var/lib/mysql"
+      - "./database:/docker-entrypoint-initdb.d"
+    networks:
+      - backend
+
   server:
     image: flipday/backend:firsttry
     container_name: "app_go"
@@ -9,18 +24,6 @@ services:
       - db
     networks:
       - backend
-
-  db:
-    build: ./database
-    container_name: "projectdb"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABE=database
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=root
-    networks:
-      - backend
-  
 
 networks:
   backend:
