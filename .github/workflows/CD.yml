@@ -69,6 +69,5 @@ jobs:
               cd docker-compose-back
               docker-compose rm -s
               docker image rm -f flipday/backend
-              docker image rm -f docker-compose-back_db
               docker-compose up -d
 # AQUI EMPEZO TODO 
