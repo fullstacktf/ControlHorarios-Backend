@@ -44,4 +44,4 @@
 
 ---
 
-![Database Schema](/docs/images/bbdd.PNG ";)")
+![Database Schema](/docs/images/bbdd.png ";)")
