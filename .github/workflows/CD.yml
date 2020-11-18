@@ -67,6 +67,10 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: | 
               cd docker-compose-back
-              docker-compose rm -s
-              docker system prune --all
+              docker stop projectdb
+              docker container rm projectdb
+              docker rmi mariadb:10.5.6
+              docker stop app_go
+              docker container rm app_go
+              docker rmi flipday/backend:firsttry
               docker-compose up -d
