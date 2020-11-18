@@ -1,9 +1,7 @@
-FROM golang:1.15.3-alpine AS build
+FROM golang:1.15.3-alpine
 ENV GO111MODULE=on
 WORKDIR /app
 COPY . /app
-RUN apt-get update
-RUN go mod init
 RUN go get ./...
 RUN go build
 EXPOSE 80
