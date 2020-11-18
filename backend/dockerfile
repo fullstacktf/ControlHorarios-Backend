@@ -1,7 +1,7 @@
-FROM golang:1.15.3 AS build
+FROM golang:1.15.3-alpine AS build
 WORKDIR /app
 COPY . /app
-RUN go get ./...
+RUN go mod download
 RUN go install ./...
 EXPOSE 80
 CMD ["go", "run","src/main.go"]
