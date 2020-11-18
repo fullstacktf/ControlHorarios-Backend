@@ -68,6 +68,6 @@ jobs:
           script: | 
               cd docker-compose-back
               docker-compose rm -s
-              docker image rm -f flipday/backend
+              docker system prune --all
               docker-compose up -d
 # AQUI EMPEZO TODO!
