@@ -16,12 +16,12 @@
 
 ---
 
-| URI                        | Request |
-|----------------------------|---------|
-| /api/companies               | POST    |
-| /api/companies/login         | POST    |
-| /api/companies/{id}/holidays | POST    |
-| /api/companies/{id}/holidays | GET     |
+| URI                        | Request | Body |
+|----------------------------|---------|------|
+| /api/companies               | POST    | username, email, password, company_name, location |
+| /api/companies/login         | POST    | email, password |
+| /api/companies/{id}/holidays | POST    | holiday_title, holiday_date |
+| /api/companies/{id}/holidays | GET     |  |
 
 
 
@@ -29,15 +29,15 @@
 
 ---
 
-| URI                         | Request |
-|-----------------------------|---------|
-| /api/employees/login         | POST    |
-| /api/employees/{id}          | GET     |
-| /api/employees/{id}/summary  | GET     |
-| /api/employees               | POST    |
-| /api/employees/{id}/password | PUT     |
-| /api/employees/{id}/checkin  | POST    |
-| /api/employees/{id}/checkout | POST    |
+| URI                         | Request | Body |
+|-----------------------------|---------|------|
+| /api/employees               | POST    | username, email, password, first_name, last_name, company_id |
+| /api/employees/login         | POST    | email, password |
+| /api/employees/{id}          | GET     | |
+| /api/employees/{id}/summary  | GET     | |
+| /api/employees/{id}/password | PUT     | password |
+| /api/employees/{id}/checkin  | POST    | description |
+| /api/employees/{id}/checkout | POST    | |
 
 
 ## Database Schema
