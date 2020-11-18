@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   server:
-    image: flipday/backend
+    image: flipday/backend:latest
     container_name: "app_go"
     ports:
       - "8080:8080"

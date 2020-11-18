@@ -26,7 +26,7 @@ jobs:
           context: .
           file: ./backend/Dockerfile
           push: true
-          tags: flipday/backend
+          tags: flipday/backend:latest
 
   update-docker:
     runs-on: ubuntu-latest
