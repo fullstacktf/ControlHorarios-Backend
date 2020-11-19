@@ -30,7 +30,7 @@ func main() {
 		log.Fatal("error al conectar a la base de datos:", err)
 	}
 
-	s.DB.AutoMigrate(&models.TipoCoche{}, &models.Coche{}, &models.Cliente{}, &models.Alquiler{})
+	s.DB.AutoMigrate(&models.User{})
 
 	routes.SetupRouter().Run(":8080")
 }
