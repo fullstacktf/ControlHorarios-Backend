@@ -5,7 +5,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/config"
 	s "github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/models"
 	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/routes"
@@ -25,12 +24,12 @@ func main() {
 			Colorful:      true,
 		},
 	)
-	s.DB, err = gorm.Open(mysql.Open(config.DbURL(config.BuildDBConfig())), &gorm.Config{Logger: newLogger})
+	s.DB, err = gorm.Open(mysql.Open("root:root@tcp(127.0.0.1:3306)/controlhorarios?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{Logger: newLogger})
 	if err != nil {
 		log.Fatal("error al conectar a la base de datos:", err)
 	}
 
 	s.DB.AutoMigrate(&models.User{})
 
-	routes.SetupRouter().Run(":8080")
+	routes.SetupRouter().Run(":8089")
 }
