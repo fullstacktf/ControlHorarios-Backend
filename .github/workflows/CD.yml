@@ -56,7 +56,7 @@ jobs:
 
   execute-docker-compose-droplet:
     runs-on: ubuntu-latest
-    needs: update-docker
+    needs: update-dockerhub-image
 
     steps:
       - name: Run docker-compose SSH command
