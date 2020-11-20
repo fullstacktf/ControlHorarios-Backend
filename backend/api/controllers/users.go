@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -46,6 +47,7 @@ func UpdateUser(c *gin.Context) {
 	}
 
 	user.Update(id)
+	fmt.Println(user)
 	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully"})
 
 }

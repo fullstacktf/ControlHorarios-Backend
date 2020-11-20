@@ -66,7 +66,7 @@ func (c *User) Update(id int) error {
 		Model(&User{}).
 		Where("User.user_id = ?", id).
 		Updates(User{
-			Username: "Maria",
+			Username: c.Username,
 		})
 
 	if result.Error != nil {
