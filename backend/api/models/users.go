@@ -8,12 +8,12 @@ import (
 )
 
 type User struct {
-	UserID     int       `gorm:"primaryKey"`
-	Username   string    `gorm:"type:varchar(50)"`
-	Email      string    `gorm:"type:varchar(50)"`
-	Password   string    `gorm:"type:varchar(50)"`
-	JoinedDate time.Time `gorm:"joined_date"`
-	Rol        string    `gorm:"type:varchar(50)"`
+	UserID     int       `gorm:"column:user_id;primaryKey"`
+	Username   string    `gorm:"column:username;type:varchar(50)"`
+	Email      string    `gorm:"column:email;type:varchar(50)"`
+	Password   string    `gorm:"column:password;type:varchar(50)"`
+	JoinedDate time.Time `gorm:"column:joined_date;joined_date"`
+	Rol        string    `gorm:"column:rol;type:varchar(50)"`
 }
 
 func (a *User) TableName() string {
@@ -26,12 +26,12 @@ func (c *Users) Get() error {
 
 	rows, err := infrastructure.DB.Debug().
 		Model(&User{}).
-		Select(`user.UserID,
-						user.Username,
-						user.Email,
-						user.Password,
-						user.JoinedDate,
-						user.Rol`).
+		Select(`User.user_id,
+						User.username,
+						User.email,
+						User.password,
+						User.joined_date,
+						User.rol`).
 		Rows()
 	if err != nil {
 		return err
@@ -49,5 +49,14 @@ func (c *Users) Get() error {
 		}
 		*c = append([]User(*c), user)
 	}
+	return nil
+}
+
+func (c *User) Nuevo() error {
+	result := infrastructure.DB.Debug().Save(c)
+	if result.Error != nil {
+		return result.Error
+	}
+
 	return nil
 }

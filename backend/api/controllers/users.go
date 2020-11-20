@@ -1,12 +1,11 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/models"
 )
 
@@ -18,16 +17,18 @@ func GetUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
 
-func CreateUser() {
-	user := &models.User{
-		UserID:     1,
-		Username:   "Pepe",
-		Email:      "pepe@pepe.pepe",
-		Password:   "123pepe",
-		JoinedDate: time.Now(),
-		Rol:        "Employee",
+func CreateUser(c *gin.Context) {
+	var user models.User
+	err := c.BindJSON(&user)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos", err)
+		return
 	}
-	infrastructure.DB.Create(user)
+
+	user.Nuevo()
+	c.JSON(http.StatusOK, gin.H{"message": "New user created successfully"})
 
 }
 

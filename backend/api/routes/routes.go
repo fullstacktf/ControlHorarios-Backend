@@ -10,7 +10,7 @@ func SetupRouter() *gin.Engine {
 	v1 := r.Group("/v1")
 	{
 		v1.GET("/users", controllers.GetUsers)
-		///v1.POST("/users/:id", controllers.CreateUser)
+		v1.POST("/users", controllers.CreateUser)
 		//v1.PUT("/users/:id", controllers.UpdateUser)
 		//v1.DELETE("/users/:id", controllers.DeleteUser)
 	}
