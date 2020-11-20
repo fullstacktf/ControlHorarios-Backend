@@ -3,6 +3,7 @@ package controllers
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 
@@ -32,11 +33,37 @@ func CreateUser(c *gin.Context) {
 
 }
 
-/*func (c UsersRepository) UpdateUser() []byte {
+func UpdateUser(c *gin.Context) {
+	var user models.User
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	err := c.BindJSON(&user)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos", err)
+		return
+	}
+
+	user.Update(id)
+	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully"})
 
 }
 
-func (c UsersRepository) DeleteUser() []byte {
+func DeleteUser(c *gin.Context) {
+
+	var user models.User
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	err := c.BindJSON(&user)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos", err)
+		return
+	}
+
+	user.Delete(id)
+	c.JSON(http.StatusOK, gin.H{"message": "User deleted successfully"})
 
 }
-*/

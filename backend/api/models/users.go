@@ -60,3 +60,30 @@ func (c *User) Nuevo() error {
 
 	return nil
 }
+
+func (c *User) Update(id int) error {
+	result := infrastructure.DB.Debug().
+		Model(&User{}).
+		Where("User.user_id = ?", id).
+		Updates(User{
+			Username: "Maria",
+		})
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+
+}
+
+func (c *User) Delete(id int) error {
+	result := infrastructure.DB.Delete(&User{}, id)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+
+}
