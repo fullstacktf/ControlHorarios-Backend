@@ -16,37 +16,33 @@
 
 ---
 
-| URI                        | Request |
-|----------------------------|---------|
-| /api/company               | POST    |
-| /api/company/login         | POST    |
-| /api/company/settings/{id} | POST    |
-| /api/company/settings/{id} | GET     |
+| URI                        | Request | Body |
+|----------------------------|---------|------|
+| /api/companies               | POST    | username, email, password, company_name, location |
+| /api/companies/login         | POST    | email, password |
+| /api/companies/{id}/holidays | POST    | holiday_title, holiday_date |
+| /api/companies/{id}/holidays | GET     |  |
+
 
 
 ### Employee
 
 ---
 
-| URI                         | Request |
-|-----------------------------|---------|
-| /api/employee/login         | POST    |
-| /api/employee/{id}          | GET     |
-| /api/employee/summary/{id}  | GET     |
-| /api/employee               | POST    |
-| /api/employee/password/{id} | PUT     |
-| /api/employee/checkin/{id}  | POST    |
-| /api/employee/checkout/{id} | POST    |
+| URI                         | Request | Body |
+|-----------------------------|---------|------|
+| /api/employees               | POST    | username, email, password, first_name, last_name, company_id |
+| /api/employees/login         | POST    | email, password |
+| /api/employees/{id}          | GET     | |
+| /api/employees/{id}/summary  | GET     | |
+| /api/employees/{id}/password | PUT     | password |
+| /api/employees/{id}/checkin  | POST    | description |
+| /api/employees/{id}/checkout | POST    | |
 
-### Holidays
-
-| URI                        | Request |
-|----------------------------|---------|
-| /api/company/holidays/{id} | POST    |
-| /api/company/holidays/{id} | GET     |
 
 ## Database Schema
 
 ---
+
 
 ![Database Schema](https://i.imgur.com/wqSHswx.png)
