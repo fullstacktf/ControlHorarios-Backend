@@ -16,8 +16,8 @@ type User struct {
 	Rol        string    `gorm:"column:rol;type:varchar(50)"`
 }
 
-func (a *User) TableName() string {
-	return "User"
+func (User) TableName() string {
+	return "users"
 }
 
 type Users []User
@@ -26,12 +26,12 @@ func (c *Users) Get() error {
 
 	rows, err := infrastructure.DB.Debug().
 		Model(&User{}).
-		Select(`User.user_id,
-						User.username,
-						User.email,
-						User.password,
-						User.joined_date,
-						User.rol`).
+		Select(`users.user_id,
+						users.username,
+						users.email,
+						users.password,
+						users.joined_date,
+						users.rol`).
 		Rows()
 	if err != nil {
 		return err
@@ -64,7 +64,7 @@ func (c *User) Nuevo() error {
 func (c *User) Update(id int) error {
 	result := infrastructure.DB.Debug().
 		Model(&User{}).
-		Where("User.user_id = ?", id).
+		Where("users.user_id = ?", id).
 		Updates(User{
 			Username: c.Username,
 		})

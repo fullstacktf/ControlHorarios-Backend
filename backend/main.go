@@ -6,7 +6,6 @@ import (
 	"time"
 
 	s "github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/infrastructure"
-	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/models"
 	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/routes"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -28,8 +27,6 @@ func main() {
 	if err != nil {
 		log.Fatal("error al conectar a la base de datos:", err)
 	}
-
-	s.DB.AutoMigrate(&models.User{})
 
 	routes.SetupRouter().Run(":8089")
 }
