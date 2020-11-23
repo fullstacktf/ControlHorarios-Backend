@@ -1,4 +1,4 @@
-module github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend
+module github.com/fullstacktf/ControlHorarios-Backend
 
 go 1.15
 

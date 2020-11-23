@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	s "github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/infrastructure"
-	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/routes"
+	s "github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
+	"github.com/fullstacktf/ControlHorarios-Backend/api/routes"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -29,4 +29,5 @@ func main() {
 	}
 
 	routes.SetupRouter().Run(":8089")
+
 }

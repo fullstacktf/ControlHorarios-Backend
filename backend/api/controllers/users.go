@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/models"
+	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 )
 
 type UsersRepository struct{}

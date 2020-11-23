@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/fullstacktf/ControlHorarios-Backend/tree/estructura_go/backend/api/infrastructure"
+	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 )
 
 type User struct {
