@@ -44,4 +44,5 @@
 
 ---
 
-![Database Schema](/docs/images/bbdd.png ";)")
+
+![Database Schema](https://i.imgur.com/wqSHswx.png)

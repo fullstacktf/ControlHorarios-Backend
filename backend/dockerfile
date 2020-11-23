@@ -1,5 +1,0 @@
-FROM golang:1.15.3-alpine AS build
-WORKDIR /app
-COPY . /app
-EXPOSE 80
-CMD ["go", "run","src/main.go"]
