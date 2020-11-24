@@ -19,19 +19,19 @@ func GetUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
 
-func CreateUser(c *gin.Context) {
+func CreateUser(c *gin.Context) int {
 	var user models.User
 	err := c.BindJSON(&user)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
 		log.Println("Error al bindear datos", err)
-		return
+		return 0
 	}
 
-	user.Nuevo()
+	_, id := user.Nuevo()
 	c.JSON(http.StatusOK, gin.H{"message": "New user created successfully"})
-
+	return id
 }
 
 func UpdateUser(c *gin.Context) {

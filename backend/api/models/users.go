@@ -52,13 +52,13 @@ func (c *Users) Get() error {
 	return nil
 }
 
-func (c *User) Nuevo() error {
+func (c *User) Nuevo() (error, int) {
 	result := infrastructure.DB.Debug().Save(c)
 	if result.Error != nil {
-		return result.Error
+		return result.Error, 0
 	}
 
-	return nil
+	return nil, c.UserID
 }
 
 func (c *User) Update(id int) error {
