@@ -15,7 +15,8 @@ func SetupRouter() *gin.Engine {
 		v1.DELETE("/users/:id", controllers.DeleteUser)
 	}
 
-	employees := r.Group("/api/employee"){
+	employees := r.Group("/api/employee")
+	{
 		employees.GET("/:id")
 		employees.GET("/:id/summary") 
 
@@ -27,7 +28,8 @@ func SetupRouter() *gin.Engine {
 		employees.PUT("/:id/checkout") 
 	}
 
-	companies:= r.Group("/api/companies"){
+	companies:= r.Group("/api/companies")
+	{
 		companies.GET("/:id/holidays")
 		companies.GET("/:id/employees")
 		companies.GET("/:id/projects") 
