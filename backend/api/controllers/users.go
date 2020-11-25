@@ -19,7 +19,7 @@ func GetUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
 
-func CreateUser(c *gin.Context) int {
+func CreateUser(c *gin.Context) uint {
 	var user models.User
 	err := c.BindJSON(&user)
 
@@ -38,7 +38,7 @@ func UpdateUser(c *gin.Context) {
 	var user models.User
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	err := c.BindJSON(&user)
+	err := c.ShouldBindJSON(&user)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})

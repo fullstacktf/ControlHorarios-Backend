@@ -8,12 +8,12 @@ import (
 )
 
 type User struct {
-	UserID     int       `gorm:"column:user_id;primaryKey"`
-	Username   string    `gorm:"column:username;type:varchar(50)"`
-	Email      string    `gorm:"column:email;type:varchar(50)"`
-	Password   string    `gorm:"column:password;type:varchar(50)"`
-	JoinedDate time.Time `gorm:"column:joined_date;joined_date"`
-	Rol        string    `gorm:"column:rol;type:varchar(50)"`
+	ID         uint   `gorm:"primary_key" json:"id"`
+	Username   string `gorm:"type:varchar(50); NOT NULL" json:"username"`
+	Password   string `gorm:"type:varchar(255); NOT NULL" json:"password"`
+	Email      string `gorm:"type:varchar(50); NOT NULL" json:"email"`
+	JoinedDate time.Time
+	rol        string `gorm:"type:varchar(50); NOT NULL" json:"rol"`
 }
 
 func (User) TableName() string {
@@ -52,13 +52,13 @@ func (c *Users) Get() error {
 	return nil
 }
 
-func (c *User) Nuevo() (error, int) {
+func (c *User) Nuevo() (error, uint) {
 	result := infrastructure.DB.Debug().Save(c)
 	if result.Error != nil {
 		return result.Error, 0
 	}
 
-	return nil, c.UserID
+	return nil, c.ID
 }
 
 func (c *User) Update(id int) error {

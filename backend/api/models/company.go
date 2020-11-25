@@ -9,9 +9,9 @@ import (
 type Company struct {
 	CompanyID   int       `gorm:"column:company_id;primaryKey"`
 	User        User      `gorm:"foreignKey:UserID"`
-	CompanyName string    `gorm:"column:company_name;type:varchar(50)"`
+	CompanyName string    `gorm:"column:company_name;type:varchar(50); NOT NULL json:CompanyName"`
 	CreatedDate time.Time `gorm:"column:create_date;create_date"`
-	Location    string    `gorm:"column:location;type:varchar(50)"`
+	Location    string    `gorm:"column:location;type:varchar(50); NOT NULL json:Location"`
 }
 
 func (Company) TableName() string {
