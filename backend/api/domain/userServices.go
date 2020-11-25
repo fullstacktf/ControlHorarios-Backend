@@ -1,38 +1,27 @@
 package domain
 
 import (
+	"net/http"
 
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
-	"github.com/fullstacktf/ControlHorarios-Backend/api/model"
+	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
+	"github.com/gin-gonic/gin"
 )
 
-func Get() []User {
-	type Users []model.User
+func GetAllUsers() []models.User {
+	var users []models.User
+	infrastructure.DB.Find(&users)
+	return users
+}
 
-	rows, err := infrastructure.DB.Debug().
-		Model(&User{}).
-		Select(`users.user_id,
-						users.username,
-						users.email,
-						users.password,
-						users.joined_date,
-						users.rol`).
-		Rows()
-	if err != nil {
-		return err
+func CreateUser(user models.UserCompany, c *gin.Context) error {
+
+	result := infrastructure.DB.Debug().
+		Select(`User.username,User.email, User.password, User.rol`).Create(&user.User)
+	if result.Error != nil {
+		return result.Error
 	}
 
-	defer rows.Close()
-
-	for rows.Next() {
-		user := User{}
-		err = infrastructure.DB.ScanRows(rows, &user)
-		if err != nil {
-			log.Println("error al bindear", err)
-		} else {
-			log.Printf("User:%v\n", user)
-		}
-		Users = append([]User(Users), user)
-	}
-	return Users
+	c.JSON(http.StatusOK, gin.H{"message": "New user created successfully"})
+	return nil
 }

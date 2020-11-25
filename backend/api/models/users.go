@@ -7,25 +7,16 @@ import (
 )
 
 type User struct {
-	ID         uint   `gorm:"primary_key" json:"id"`
+	UserID     int    `gorm:"column:user_id;primaryKey"`
 	Username   string `gorm:"type:varchar(50); NOT NULL" json:"username"`
 	Password   string `gorm:"type:varchar(255); NOT NULL" json:"password"`
 	Email      string `gorm:"type:varchar(50); NOT NULL" json:"email"`
 	JoinedDate time.Time
-	rol        string `gorm:"type:varchar(50); NOT NULL" json:"rol"`
+	Rol        string `gorm:"type:varchar(50); NOT NULL" json:"rol"`
 }
 
 func (User) TableName() string {
 	return "users"
-}
-
-func (c *User) Nuevo() error {
-	result := infrastructure.DB.Debug().Save(c)
-	if result.Error != nil {
-		return result.Error
-	}
-
-	return nil
 }
 
 func (c *User) Update(id int) error {

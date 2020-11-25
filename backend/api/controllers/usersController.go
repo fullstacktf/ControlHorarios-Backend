@@ -16,23 +16,21 @@ import (
 type UsersRepository struct{}
 
 func GetUsers(c *gin.Context) {
-	users := domain.Get()
+
+	users := domain.GetAllUsers()
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
 
-func CreateUser(c *gin.Context) int {
-	var user models.User
+func CreateUser(c *gin.Context) {
+	var user models.UserCompany
 	err := c.ShouldBindWith(&user, binding.JSON)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
 		log.Println("Error al bindear datos", err)
-		return 0
-	}
 
-	_, id := user.Nuevo()
-	c.JSON(http.StatusOK, gin.H{"message": "New user created successfully"})
-	return id
+	}
+	domain.CreateUser(user, c)
 }
 
 func UpdateUser(c *gin.Context) {
