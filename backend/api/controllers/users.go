@@ -7,21 +7,22 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 
+	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 )
 
 type UsersRepository struct{}
 
 func GetUsers(c *gin.Context) {
-	var users models.Users
-	users.Get()
+	users := domain.Get()
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
 
-func CreateUser(c *gin.Context) uint {
+func CreateUser(c *gin.Context) int {
 	var user models.User
-	err := c.BindJSON(&user)
+	err := c.ShouldBindWith(&user, binding.JSON)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
