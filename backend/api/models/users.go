@@ -20,38 +20,6 @@ func (User) TableName() string {
 	return "users"
 }
 
-type Users []User
-
-func (c *Users) Get() error {
-
-	rows, err := infrastructure.DB.Debug().
-		Model(&User{}).
-		Select(`users.user_id,
-						users.username,
-						users.email,
-						users.password,
-						users.joined_date,
-						users.rol`).
-		Rows()
-	if err != nil {
-		return err
-	}
-
-	defer rows.Close()
-
-	for rows.Next() {
-		user := User{}
-		err = infrastructure.DB.ScanRows(rows, &user)
-		if err != nil {
-			log.Println("error al bindear", err)
-		} else {
-			log.Printf("User:%v\n", user)
-		}
-		*c = append([]User(*c), user)
-	}
-	return nil
-}
-
 func (c *User) Nuevo() error {
 	result := infrastructure.DB.Debug().Save(c)
 	if result.Error != nil {
