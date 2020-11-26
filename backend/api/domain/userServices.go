@@ -14,14 +14,14 @@ func GetAllUsers() []models.User {
 	return users
 }
 
-func CreateUser(user models.UserCompany, c *gin.Context) error {
+func CreateUser(user models.UserCompany, c *gin.Context) (error, int) {
 
 	result := infrastructure.DB.Debug().
 		Select(`User.username,User.email, User.password, User.rol`).Create(&user.User)
 	if result.Error != nil {
-		return result.Error
+		return result.Error, 0
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "New user created successfully"})
-	return nil
+	return nil, user.User.UserID
 }

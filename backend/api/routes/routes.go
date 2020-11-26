@@ -34,6 +34,7 @@ func SetupRouter() *gin.Engine {
 		companies.GET("/:id/employees")
 		companies.GET("/:id/projects")
 		companies.GET("/:id/sections")*/
+		companies.GET("/:id", controllers.GetCompany)
 
 		companies.POST("/", controllers.CreateCompany)
 		/*companies.POST("/login")

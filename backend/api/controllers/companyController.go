@@ -3,6 +3,7 @@ package controllers
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
@@ -23,7 +24,7 @@ func CreateCompany(c *gin.Context) {
 
 	}
 
-	domain.CreateUser(userCompany, c)
+	_, id := domain.CreateUser(userCompany, c)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
@@ -31,6 +32,14 @@ func CreateCompany(c *gin.Context) {
 		return
 	}
 
-	domain.CreateCompany(userCompany, c)
+	domain.CreateCompany(userCompany, c, id)
 
+}
+
+func GetCompany(c *gin.Context) {
+
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	company := domain.GetCompany(id)
+	c.JSON(http.StatusOK, gin.H{"data": company})
 }
