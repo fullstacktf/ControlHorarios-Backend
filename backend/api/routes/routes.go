@@ -15,18 +15,18 @@ func SetupRouter() *gin.Engine {
 		v1.DELETE("/users/:id", controllers.DeleteUser)
 	}
 
-	/*employees := r.Group("/api/employee")
+	employees := r.Group("/api/employee")
 	{
-		employees.GET("/:id")
-		employees.GET("/:id/summary")
+		// employees.GET("/:id")
+		// employees.GET("/:id/summary")
 
-		employees.POST("/")
-		employees.POST("/login")
-		employees.POST("/:id/checkin")
+		employees.POST("/:idCompany", controllers.CreateEmployee)
+		// employees.POST("/login")
+		// employees.POST("/:id/checkin")
 
-		employees.PUT("/:id/password")
-		employees.PUT("/:id/checkout")
-	}*/
+		// employees.PUT("/:id/password")
+		// employees.PUT("/:id/checkout")
+	}
 
 	companies := r.Group("/api/companies")
 	{

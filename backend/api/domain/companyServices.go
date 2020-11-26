@@ -22,12 +22,9 @@ func CreateCompany(company models.UserCompany, c *gin.Context, id int) error {
 	return nil
 }
 
-func GetCompany(id int) []models.Company {
-
-	println(id)
-	var company []models.Company
-	infrastructure.DB.Find(&company)
+func GetCompany(id int) models.Company {
+	var company models.Company
+	infrastructure.DB.First(&company, id)
 
 	return company
-
 }

@@ -21,7 +21,6 @@ func CreateCompany(c *gin.Context) {
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
 		log.Println("Error al bindear datos", err)
-
 	}
 
 	_, id := domain.CreateUser(userCompany, c)

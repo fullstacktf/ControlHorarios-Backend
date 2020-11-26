@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-
-	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 )
 
 type Company struct {
@@ -22,13 +20,4 @@ type UserCompany struct {
 
 func (Company) TableName() string {
 	return "company"
-}
-
-func (c *Company) NewCompany() error {
-
-	result := infrastructure.DB.Debug().Save(c)
-	if result.Error != nil {
-		return result.Error
-	}
-	return nil
 }
