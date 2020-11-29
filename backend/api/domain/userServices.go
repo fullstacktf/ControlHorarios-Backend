@@ -37,3 +37,18 @@ func CreateUserEmployee(user models.UserEmployee, c *gin.Context) (error, int) {
 	c.JSON(http.StatusOK, gin.H{"message": "New user created successfully"})
 	return nil, user.User.UserID
 }
+
+func UpdateUser(id int, name string) error {
+	result := infrastructure.DB.Debug().
+		Model(&models.User{}).
+		Where("users.user_id = ?", id).
+		Updates(models.User{
+			Username: name,
+		})
+	return result.Error
+}
+
+func DeleteUser(id int) error {
+	result := infrastructure.DB.Debug().Delete(&models.User{}, id)
+	return result.Error
+}

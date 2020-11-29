@@ -3,6 +3,7 @@ package domain
 import (
 	"net/http"
 
+	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
@@ -27,4 +28,8 @@ func GetCompany(id int) models.Company {
 	infrastructure.DB.First(&company, id)
 
 	return company
+}
+
+func CreateProject(id int, projectDto dto.ProjectDto) error {
+	return infrastructure.InsertProject(id, projectDto.ProjectName)
 }

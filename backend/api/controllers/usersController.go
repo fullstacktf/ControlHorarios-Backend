@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -45,26 +44,21 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
-	user.Update(id)
-	fmt.Println(user)
-	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully"})
-
+	dbErr := domain.UpdateUser(id, user.Username)
+	if dbErr != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error updating user"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "User updated successfully"})
+	}
 }
 
 func DeleteUser(c *gin.Context) {
-
-	var user models.User
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	err := c.BindJSON(&user)
-
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
-		return
+	dbErr := domain.DeleteUser(id)
+	if dbErr != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error deleting user"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "User deleted successfully"})
 	}
-
-	user.Delete(id)
-	c.JSON(http.StatusOK, gin.H{"message": "User deleted successfully"})
-
 }

@@ -23,7 +23,7 @@ func main() {
 			Colorful:      true,
 		},
 	)
-	s.DB, err = gorm.Open(mysql.Open("root:root@tcp(127.0.0.1:3306)/controlhorarios?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{Logger: newLogger})
+	s.DB, err = gorm.Open(mysql.Open("root:root@tcp(localhost:3306)/controlhorarios?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{Logger: newLogger})
 	if err != nil {
 		log.Fatal("error al conectar a la base de datos:", err)
 	}
