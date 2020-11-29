@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
@@ -22,8 +21,4 @@ func CreateEmployee(employee models.UserEmployee, c *gin.Context, id int) error 
 
 	c.JSON(http.StatusOK, gin.H{"message": "New employee created successfully"})
 	return nil
-}
-
-func EmployeeLogin(employeeLoginDto dto.EmployeeLoginDto) models.User {
-	return infrastructure.GetUser(employeeLoginDto.Email, employeeLoginDto.Password)
 }

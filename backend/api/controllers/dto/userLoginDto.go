@@ -1,6 +1,6 @@
 package dto
 
-type EmployeeLoginDto struct {
+type UserLoginDto struct {
 	Email    string `json:"Email"`
 	Password string `json:"Password"`
 }

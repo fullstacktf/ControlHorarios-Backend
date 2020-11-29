@@ -21,7 +21,7 @@ func SetupRouter() *gin.Engine {
 		// employees.GET("/:id/summary")
 
 		employees.POST("/create/:idCompany", controllers.CreateEmployee)
-		employees.POST("/login", controllers.EmployeeLogin) // Manuel
+		employees.POST("/login", controllers.UserLogin) // Manuel
 		// employees.POST("/:id/checkin")   // Ariane
 
 		// employees.PUT("/:id/password")		// Airan

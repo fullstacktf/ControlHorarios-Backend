@@ -3,6 +3,7 @@ package domain
 import (
 	"net/http"
 
+	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
@@ -51,4 +52,8 @@ func UpdateUser(id int, name string) error {
 func DeleteUser(id int) error {
 	result := infrastructure.DB().Debug().Delete(&models.User{}, id)
 	return result.Error
+}
+
+func UserLogin(userLoginDto dto.UserLoginDto) models.User {
+	return infrastructure.GetUser(userLoginDto.Email, userLoginDto.Password)
 }
