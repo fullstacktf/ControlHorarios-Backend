@@ -45,7 +45,7 @@ func GetCompany(c *gin.Context) {
 
 func CreateProject(c *gin.Context) {
 	var projectDto dto.ProjectDto
-	c.MustBindWith(&projectDto, binding.JSON)
+	c.BindJSON(&projectDto)
 	if projectDto.ProjectName == "" {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
 		log.Println("Error al bindear datos")

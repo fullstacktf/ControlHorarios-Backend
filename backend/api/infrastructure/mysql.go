@@ -33,6 +33,5 @@ func DB() *gorm.DB {
 			log.Fatal("error al conectar a la base de datos:", err)
 		}
 	}
-
 	return database
 }

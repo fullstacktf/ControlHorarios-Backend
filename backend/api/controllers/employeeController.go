@@ -33,3 +33,13 @@ func CreateEmployee(c *gin.Context) {
 
 	domain.CreateEmployee(userEmployee, c, id)
 }
+
+func EmployeeLogin(c *gin.Context) {
+	/*var employeeLoginDto dto.EmployeeLoginDto
+	c.BindJSON(&employeeLoginDto)
+	if projectDto.ProjectName == "" {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos")
+	}*/
+
+}
