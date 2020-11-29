@@ -10,13 +10,13 @@ import (
 
 func GetAllUsers() []models.User {
 	var users []models.User
-	infrastructure.DB.Find(&users)
+	infrastructure.DB().Find(&users)
 	return users
 }
 
 func CreateUser(user models.UserCompany, c *gin.Context) (error, int) {
 
-	result := infrastructure.DB.Debug().
+	result := infrastructure.DB().Debug().
 		Select(`User.username,User.email, User.password, User.rol`).Create(&user.User)
 	if result.Error != nil {
 		return result.Error, 0
@@ -28,7 +28,7 @@ func CreateUser(user models.UserCompany, c *gin.Context) (error, int) {
 
 func CreateUserEmployee(user models.UserEmployee, c *gin.Context) (error, int) {
 
-	result := infrastructure.DB.Debug().
+	result := infrastructure.DB().Debug().
 		Select(`User.username,User.email, User.password, User.rol`).Create(&user.User)
 	if result.Error != nil {
 		return result.Error, 0
@@ -39,7 +39,7 @@ func CreateUserEmployee(user models.UserEmployee, c *gin.Context) (error, int) {
 }
 
 func UpdateUser(id int, name string) error {
-	result := infrastructure.DB.Debug().
+	result := infrastructure.DB().Debug().
 		Model(&models.User{}).
 		Where("users.user_id = ?", id).
 		Updates(models.User{
@@ -49,6 +49,6 @@ func UpdateUser(id int, name string) error {
 }
 
 func DeleteUser(id int) error {
-	result := infrastructure.DB.Debug().Delete(&models.User{}, id)
+	result := infrastructure.DB().Debug().Delete(&models.User{}, id)
 	return result.Error
 }

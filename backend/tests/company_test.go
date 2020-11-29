@@ -19,6 +19,6 @@ func TestCreateProjectShouldReturn200(t *testing.T) {
 		Post("/api/companies/1/projects").
 		Body(`{"ProjectName": "Control Horarios 2"}`).
 		Expect(t).
-		Status(http.StatusCreated).
+		Status(http.StatusOK).
 		End()
 }
