@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
@@ -35,11 +36,17 @@ func CreateEmployee(c *gin.Context) {
 }
 
 func EmployeeLogin(c *gin.Context) {
-	/*var employeeLoginDto dto.EmployeeLoginDto
+	var employeeLoginDto dto.EmployeeLoginDto
 	c.BindJSON(&employeeLoginDto)
-	if projectDto.ProjectName == "" {
+	if employeeLoginDto.Email == "" || employeeLoginDto.Password == "" {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
 		log.Println("Error al bindear datos")
-	}*/
+	}
 
+	id := domain.EmployeeLogin(employeeLoginDto)
+	if id != 0 {
+		c.JSON(http.StatusOK, gin.H{"UserID": id})
+	} else {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Email or Password wrong"})
+	}
 }
