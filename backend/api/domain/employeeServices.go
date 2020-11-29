@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -25,8 +24,6 @@ func CreateEmployee(employee models.UserEmployee, c *gin.Context, id int) error 
 	return nil
 }
 
-func EmployeeLogin(employeeLoginDto dto.EmployeeLoginDto) int {
-	user := infrastructure.GetUser(employeeLoginDto.Email, employeeLoginDto.Password)
-	fmt.Println(strconv.Itoa(user.UserID))
-	return user.UserID
+func EmployeeLogin(employeeLoginDto dto.EmployeeLoginDto) models.User {
+	return infrastructure.GetUser(employeeLoginDto.Email, employeeLoginDto.Password)
 }

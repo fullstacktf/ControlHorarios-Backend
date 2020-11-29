@@ -43,9 +43,9 @@ func EmployeeLogin(c *gin.Context) {
 		log.Println("Error al bindear datos")
 	}
 
-	id := domain.EmployeeLogin(employeeLoginDto)
-	if id != 0 {
-		c.JSON(http.StatusOK, gin.H{"UserID": id})
+	user := domain.EmployeeLogin(employeeLoginDto)
+	if user.UserID != 0 {
+		c.JSON(http.StatusOK, gin.H{"UserID": user.UserID, "Rol": user.Rol})
 	} else {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Email or Password wrong"})
 	}
