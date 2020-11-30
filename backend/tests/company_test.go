@@ -35,3 +35,21 @@ func TestGetEmployeesShouldReturn200(t *testing.T) {
 		Status(http.StatusOK).
 		End()
 }
+
+func TestGetProjectsShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Get("/api/companies/1/projects").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestGetSectionsShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Get("/api/companies/1/sections").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
