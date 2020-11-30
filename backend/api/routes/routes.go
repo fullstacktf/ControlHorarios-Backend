@@ -7,12 +7,10 @@ import (
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
-	v1 := r.Group("/v1")
+	user := r.Group("/api/user")
 	{
-		v1.GET("/users", controllers.GetUsers)
-		v1.POST("/users", controllers.CreateUser)
-		v1.PUT("/users/:id", controllers.UpdateUser)
-		v1.DELETE("/users/:id", controllers.DeleteUser)
+
+		user.POST("/login", controllers.UserLogin)
 	}
 
 	employees := r.Group("/api/employee")
@@ -21,17 +19,11 @@ func SetupRouter() *gin.Engine {
 
 		// employees.GET("/:id/summary")
 
-		employees.POST("/create/:idCompany", controllers.CreateEmployee)
-		employees.POST("/login", controllers.UserLogin) // Manuel
+		employees.POST("/:id", controllers.CreateEmployee)
+		employees.POST("/:id/checkin", controllers.CreateCheckIn)
 
-		// employees.GET("/:id/summary")
-
-		employees.POST("/:idCompany", controllers.CreateEmployee)
-		employees.POST("/:idCompany/checkin", controllers.CreateCheckIn) // Ariane
-
-
-		employees.PUT("/:idCompany/password", controllers.UpdateEmployeePassword) // Airan
-		employees.PUT("/:idCompany/checkout/:idRecord", controllers.DoCheckOut)   // Ariane
+		employees.PUT("/:id/password", controllers.UpdateEmployeePassword)
+		employees.PUT("/:id/checkout/:idRecord", controllers.DoCheckOut)
 	}
 
 	companies := r.Group("/api/companies")
@@ -44,10 +36,9 @@ func SetupRouter() *gin.Engine {
 
 		companies.POST("/", controllers.CreateCompany)
 
-		companies.POST("/:id/projects", controllers.CreateProject) // Manuel
-		companies.POST("/:idCompany/holidays", controllers.CreateHoliday) // Jaime
-		companies.POST("/:idCompany/sections", controllers.CreateSection) // Airan
-
+		companies.POST("/:id/projects", controllers.CreateProject)
+		companies.POST("/:id/holidays", controllers.CreateHoliday)
+		companies.POST("/:id/sections", controllers.CreateSection)
 
 		/*companies.PUT("/:id/projects")
 		companies.PUT("/:id/sections")

@@ -13,7 +13,7 @@ import (
 func CreateEmployee(employee models.UserEmployee, c *gin.Context, id int) error {
 
 	employee.Employee.UserID = id
-	employee.Employee.CompanyID, _ = strconv.Atoi(c.Params.ByName("idCompany"))
+	employee.Employee.CompanyID, _ = strconv.Atoi(c.Params.ByName("id"))
 	result := infrastructure.DB().Debug().
 		Select(`Employee.first_name, Employee.last_name`).Create(&employee.Employee)
 	if result.Error != nil {
@@ -26,9 +26,9 @@ func CreateEmployee(employee models.UserEmployee, c *gin.Context, id int) error 
 
 func CreateCheckIn(employeeRecord models.EmployeeRecord, c *gin.Context) error {
 
-	employeeRecord.EmployeeID, _ = strconv.Atoi(c.Params.ByName("idCompany"))
+	employeeRecord.EmployeeID, _ = strconv.Atoi(c.Params.ByName("id"))
 
-	result := infrastructure.DB.Debug().Create(&employeeRecord)
+	result := infrastructure.DB().Debug().Create(&employeeRecord)
 
 	if result.Error != nil {
 		return result.Error
@@ -45,7 +45,7 @@ func DoCheckOut(c *gin.Context) error {
 
 	timeOut := time.Now()
 	recordId, _ := strconv.Atoi(c.Params.ByName("idRecord"))
-	result := infrastructure.DB.Debug().
+	result := infrastructure.DB().Debug().
 		Model(models.EmployeeRecord{}).
 		Where("employee_records.record_id = ?", recordId).
 		Updates(models.EmployeeRecord{
@@ -59,9 +59,9 @@ func DoCheckOut(c *gin.Context) error {
 
 func UpdateEmployeePassword(user models.User, c *gin.Context) error {
 
-	id, _ := strconv.Atoi(c.Params.ByName("idCompany"))
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
 
-	result := infrastructure.DB.Debug().
+	result := infrastructure.DB().Debug().
 		Model(&models.User{}).
 		Where("users.user_id = ?", id).
 		Updates(models.User{

@@ -59,6 +59,7 @@ func CreateProject(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, gin.H{"message": "Project created successfully"})
 	}
+}
 
 func CreateHoliday(c *gin.Context) {
 

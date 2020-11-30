@@ -11,10 +11,10 @@ import (
 func TestUserLoginShouldReturn200(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter()).
-		Post("/api/employee/login").
+		Post("/api/user/login").
 		Body(`{
 			"Email": "airan@gmail.com",
-			"Password": "12345"
+			"Password": "1234"
 		}`).
 		Expect(t).
 		Body(`{

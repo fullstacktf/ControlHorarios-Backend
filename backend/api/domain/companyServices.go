@@ -33,12 +33,13 @@ func GetCompany(id int) models.Company {
 
 func CreateProject(id int, projectDto dto.ProjectDto) error {
 	return infrastructure.InsertProject(id, projectDto.ProjectName)
+}
 
 func CreateHoliday(holidayCompany models.Holidays, c *gin.Context) error {
 
-	holidayCompany.CompanyID, _ = strconv.Atoi(c.Params.ByName("idCompany"))
+	holidayCompany.CompanyID, _ = strconv.Atoi(c.Params.ByName("id"))
 
-	result := infrastructure.DB.Debug().Create(&holidayCompany)
+	result := infrastructure.DB().Debug().Create(&holidayCompany)
 
 	if result.Error != nil {
 		return result.Error
@@ -51,9 +52,9 @@ func CreateHoliday(holidayCompany models.Holidays, c *gin.Context) error {
 
 func CreateSection(section models.Sections, c *gin.Context) error {
 
-	section.CompanyID, _ = strconv.Atoi(c.Params.ByName("idCompany"))
+	section.CompanyID, _ = strconv.Atoi(c.Params.ByName("id"))
 
-	result := infrastructure.DB.Debug().Create(&section)
+	result := infrastructure.DB().Debug().Create(&section)
 	if result.Error != nil {
 		return result.Error
 	}
