@@ -16,7 +16,6 @@ import (
 type UsersRepository struct{}
 
 func GetUsers(c *gin.Context) {
-
 	users := domain.GetAllUsers()
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }

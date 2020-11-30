@@ -63,7 +63,7 @@ func CreateSection(section models.Sections, c *gin.Context) error {
 	return nil
 }
 
-func GetAllHolidays(id int) []models.Holidays {
+func GetHolidays(id int) []models.Holidays {
 	var holidays []models.Holidays
 	infrastructure.DB().Debug().Where("company_id = ?", id).Find(&holidays)
 	return holidays

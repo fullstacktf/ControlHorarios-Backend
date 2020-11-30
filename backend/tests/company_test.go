@@ -18,10 +18,19 @@ func TestCreateProjectShouldReturn200(t *testing.T) {
 		End()
 }
 
-func TestGetAllHolidaysShouldReturn200(t *testing.T) {
+func TestGetHolidaysShouldReturn200(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter()).
 		Get("/api/companies/1/holidays").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestGetEmployeesShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Get("/api/companies/1/employees").
 		Expect(t).
 		Status(http.StatusOK).
 		End()

@@ -92,10 +92,20 @@ func CreateSection(c *gin.Context) {
 
 func GetHolidays(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Params.ByName("id"))
-	holidays := domain.GetAllHolidays(id)
+	holidays := domain.GetHolidays(id)
 	if len(holidays) == 0 {
 		c.JSON(http.StatusNotFound, "Holidays list not found")
 	} else {
 		c.JSON(http.StatusOK, gin.H{"data": holidays})
+	}
+}
+
+func GetEmployees(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	employees := domain.GetEmployees(id)
+	if len(employees) == 0 {
+		c.JSON(http.StatusNotFound, "Employee list not found")
+	} else {
+		c.JSON(http.StatusOK, gin.H{"data": employees})
 	}
 }

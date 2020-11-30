@@ -48,7 +48,6 @@ func CreateCheckIn(c *gin.Context) {
 }
 
 func DoCheckOut(c *gin.Context) {
-
 	domain.DoCheckOut(c)
 }
 
@@ -63,5 +62,4 @@ func UpdateEmployeePassword(c *gin.Context) {
 	}
 
 	domain.UpdateEmployeePassword(user, c)
-
 }

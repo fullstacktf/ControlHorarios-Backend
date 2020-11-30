@@ -75,3 +75,9 @@ func UpdateEmployeePassword(user models.User, c *gin.Context) error {
 	c.JSON(http.StatusOK, gin.H{"message": "Updated password"})
 	return nil
 }
+
+func GetEmployees(id int) []models.Employee {
+	var employees []models.Employee
+	infrastructure.DB().Debug().Where("company_id").Find(&employees)
+	return employees
+}
