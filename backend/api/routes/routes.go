@@ -18,7 +18,7 @@ func SetupRouter() *gin.Engine {
 	employees := r.Group("/api/employee")
 	{
 		// employees.GET("/:id")
-		// employees.GET("/:id/summary")
+		// employees.GET("/:id/summary")dfgfdg
 
 		employees.POST("/create/:idCompany", controllers.CreateEmployee)
 		employees.POST("/login", controllers.UserLogin) // Manuel

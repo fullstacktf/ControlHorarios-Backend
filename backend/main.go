@@ -8,5 +8,4 @@ var err error
 
 func main() {
 	routes.SetupRouter().Run(":8089")
-
 }
