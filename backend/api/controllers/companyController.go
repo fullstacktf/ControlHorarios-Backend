@@ -42,3 +42,31 @@ func GetCompany(c *gin.Context) {
 	company := domain.GetCompany(id)
 	c.JSON(http.StatusOK, gin.H{"data": company})
 }
+
+func CreateHoliday(c *gin.Context) {
+
+	var holidayCompany models.Holidays
+
+	err := c.ShouldBindWith(&holidayCompany, binding.JSON)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos", err)
+	}
+
+	domain.CreateHoliday(holidayCompany, c)
+
+}
+
+func CreateSection(c *gin.Context) {
+	var section models.Sections
+
+	err := c.ShouldBindWith(&section, binding.JSON)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos", err)
+	}
+
+	domain.CreateSection(section, c)
+}

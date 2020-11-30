@@ -17,15 +17,15 @@ func SetupRouter() *gin.Engine {
 
 	employees := r.Group("/api/employee")
 	{
-		// employees.GET("/:id")  
+		// employees.GET("/:id")
 		// employees.GET("/:id/summary")
 
 		employees.POST("/:idCompany", controllers.CreateEmployee)
 		// employees.POST("/login")					// Manuel
-		// employees.POST("/:id/checkin")   // Ariane
+		employees.POST("/:idCompany/checkin", controllers.CreateCheckIn) // Ariane
 
-		// employees.PUT("/:id/password")		// Airan
-		// employees.PUT("/:id/checkout")   // Ariane
+		employees.PUT("/:idCompany/password", controllers.UpdateEmployeePassword) // Airan
+		employees.PUT("/:idCompany/checkout/:idRecord", controllers.DoCheckOut)   // Ariane
 	}
 
 	companies := r.Group("/api/companies")
@@ -37,12 +37,12 @@ func SetupRouter() *gin.Engine {
 		companies.GET("/:id", controllers.GetCompany)
 
 		companies.POST("/", controllers.CreateCompany)
-		/*companies.POST("/login")				// Jaime
-		companies.POST("/:id/holidays")		// Jaime
-		companies.POST("/:id/projects")		// Manuel
-		companies.POST("/:id/sections") 	// Airan
+		//companies.POST("/login")				// Jaime
+		companies.POST("/:idCompany/holidays", controllers.CreateHoliday) // Jaime
+		//companies.POST("/:id/projects")		// Manuel
+		companies.POST("/:idCompany/sections", controllers.CreateSection) // Airan
 
-		companies.PUT("/:id/projects")
+		/*companies.PUT("/:id/projects")
 		companies.PUT("/:id/sections")
 		companies.PUT("/:id/holidays")
 
