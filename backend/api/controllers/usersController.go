@@ -72,9 +72,9 @@ func UserLogin(c *gin.Context) {
 		log.Println("Error al bindear datos")
 	}
 
-	user := domain.UserLogin(employeeLoginDto)
-	if user.UserID != 0 {
-		c.JSON(http.StatusOK, gin.H{"UserID": user.UserID, "Rol": user.Rol})
+	userLoginDto := domain.UserLogin(employeeLoginDto)
+	if userLoginDto.UserID != 0 {
+		c.JSON(http.StatusOK, gin.H{"UserID": userLoginDto.UserID, "SecondaryID": userLoginDto.SecondaryID, "Rol": userLoginDto.Rol})
 	} else {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Email or Password wrong"})
 	}

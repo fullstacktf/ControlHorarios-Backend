@@ -7,3 +7,10 @@ func InsertProject(id int, name string) error {
 	result := DB().Debug().Create(&project)
 	return result.Error
 }
+
+func GetCompanyId(id int) int {
+	var company models.Company
+	DB().Debug().Where("user_id = ?", id).First(&company)
+
+	return company.CompanyID
+}
