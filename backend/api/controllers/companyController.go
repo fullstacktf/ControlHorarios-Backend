@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
@@ -32,7 +33,6 @@ func CreateCompany(c *gin.Context) {
 	}
 
 	domain.CreateCompany(userCompany, c, id)
-
 }
 
 func GetCompany(c *gin.Context) {
@@ -42,6 +42,23 @@ func GetCompany(c *gin.Context) {
 	company := domain.GetCompany(id)
 	c.JSON(http.StatusOK, gin.H{"data": company})
 }
+
+func CreateProject(c *gin.Context) {
+	var projectDto dto.ProjectDto
+	c.BindJSON(&projectDto)
+	if projectDto.ProjectName == "" {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos")
+	}
+
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := domain.CreateProject(id, projectDto)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error creating project"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "Project created successfully"})
+	}
 
 func CreateHoliday(c *gin.Context) {
 
@@ -69,4 +86,5 @@ func CreateSection(c *gin.Context) {
 	}
 
 	domain.CreateSection(section, c)
+
 }

@@ -8,12 +8,19 @@ import (
 	"github.com/steinfletcher/apitest"
 )
 
-func TestCreateProjectShouldReturn200(t *testing.T) {
+func TestUserLoginShouldReturn200(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter()).
-		Post("/api/companies/1/projects").
-		Body(`{"ProjectName": "Control Horarios 2"}`).
+		Post("/api/employee/login").
+		Body(`{
+			"Email": "airan@gmail.com",
+			"Password": "12345"
+		}`).
 		Expect(t).
+		Body(`{
+			"Rol": "employee",
+			"UserID": 4
+		}`).
 		Status(http.StatusOK).
 		End()
 }
