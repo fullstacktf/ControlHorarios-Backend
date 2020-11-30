@@ -3,11 +3,11 @@ package models
 import "time"
 
 type EmployeeRecord struct {
-	RecordID    int       `gorm:"column:record_id;primaryKey"`
-	Description string    `gorm:"column:description;type:varchar(50)"`
-	StartTime   time.Time `gorm:"column:start_time;start_time"`
+	RecordID    int       `gorm:"column:record_id;primaryKey;"`
+	Description string    `gorm:"column:description;type:varchar(50); NOT NULL json:"description"`
 	EndTime     time.Time `gorm:"column:end_time;end_time"`
-	Employee    Employee  `gorm:"foreignKey:EmployeeID"`
+	EmployeeID  int
+	Employee    Employee `gorm:"foreignKey:EmployeeID"`
 }
 
 func (EmployeeRecord) TableName() string {
