@@ -13,13 +13,13 @@ func TestUserLoginShouldReturn200(t *testing.T) {
 		Handler(routes.SetupRouter()).
 		Post("/api/user/login").
 		Body(`{
-			"Email": "airan@gmail.com",
-			"Password": "1234"
+			"Email": "johndoe@gmail.com",
+			"Password": "foo"
 		}`).
 		Expect(t).
 		Body(`{
 			"Rol": "employee",
-			"UserID": 4
+			"UserID": 1
 		}`).
 		Status(http.StatusOK).
 		End()
