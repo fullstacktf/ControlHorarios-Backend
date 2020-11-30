@@ -62,3 +62,9 @@ func CreateSection(section models.Sections, c *gin.Context) error {
 	c.JSON(http.StatusOK, gin.H{"message": "New section created successfully"})
 	return nil
 }
+
+func GetAllHolidays(id int) []models.Holidays {
+	var holidays []models.Holidays
+	infrastructure.DB().Debug().Where("company_id = ?", id).Find(&holidays)
+	return holidays
+}

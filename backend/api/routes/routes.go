@@ -28,8 +28,8 @@ func SetupRouter() *gin.Engine {
 
 	companies := r.Group("/api/companies")
 	{
-		/*companies.GET("/:id/holidays")
-		companies.GET("/:id/employees")
+		companies.GET("/:id/holidays", controllers.GetHolidays)
+		/*companies.GET("/:id/employees")
 		companies.GET("/:id/projects")
 		companies.GET("/:id/sections")*/
 		companies.GET("/:id", controllers.GetCompany)

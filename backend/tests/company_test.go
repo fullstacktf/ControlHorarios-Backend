@@ -17,3 +17,12 @@ func TestCreateProjectShouldReturn200(t *testing.T) {
 		Status(http.StatusOK).
 		End()
 }
+
+func TestGetAllHolidaysShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Get("/api/companies/1/holidays").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
