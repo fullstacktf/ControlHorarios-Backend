@@ -9,7 +9,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: setup node
+      - name: setup go
         uses: actions/setup-go@v2
         with:
           go-version: "1.15.3"
