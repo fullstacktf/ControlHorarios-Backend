@@ -27,7 +27,7 @@ func CreateEmployee(employee models.UserEmployee, c *gin.Context, id int) error 
 func CreateCheckIn(employeeRecord models.EmployeeRecord, c *gin.Context) error {
 
 	employeeRecord.EmployeeID, _ = strconv.Atoi(c.Params.ByName("id"))
-
+	employeeRecord.StartTime = time.Now()
 	result := infrastructure.DB().Debug().Create(&employeeRecord)
 
 	if result.Error != nil {
@@ -74,4 +74,14 @@ func UpdateEmployeePassword(user models.User, c *gin.Context) error {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Updated password"})
 	return nil
+}
+
+func GetSummary(records []models.EmployeeRecord, c *gin.Context) []models.EmployeeRecord {
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	println(id)
+	infrastructure.DB().
+		Select("record_id", "description", "start_time", "end_time", "employee_id").
+		Where("employee_id = ?", id).
+		Find(&records)
+	return records
 }

@@ -48,7 +48,6 @@ func CreateCheckIn(c *gin.Context) {
 }
 
 func DoCheckOut(c *gin.Context) {
-
 	domain.DoCheckOut(c)
 }
 
@@ -63,5 +62,17 @@ func UpdateEmployeePassword(c *gin.Context) {
 	}
 
 	domain.UpdateEmployeePassword(user, c)
+}
+
+func GetSummary(c *gin.Context) {
+
+	var records []models.EmployeeRecord
+
+	summary := domain.GetSummary(records, c)
+	if len(summary) == 0 {
+		c.JSON(http.StatusNotFound, "Records not found")
+	} else {
+		c.JSON(http.StatusOK, gin.H{"data": summary})
+	}
 
 }

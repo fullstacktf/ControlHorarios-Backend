@@ -54,6 +54,14 @@ func DeleteUser(id int) error {
 	return result.Error
 }
 
-func UserLogin(userLoginDto dto.UserLoginDto) models.User {
-	return infrastructure.GetUser(userLoginDto.Email, userLoginDto.Password)
+func UserLogin(userLoginDto dto.UserLoginDto) dto.LoginResponseDto {
+	user := infrastructure.GetUser(userLoginDto.Email, userLoginDto.Password)
+	var id int
+	if user.Rol == "employee" {
+		id = infrastructure.GetEmployeeId(user.UserID)
+	}
+	if user.Rol == "company" {
+		id = infrastructure.GetCompanyId(user.UserID)
+	}
+	return dto.LoginResponseDto{UserID: user.UserID, SecondaryID: id, Rol: user.Rol}
 }

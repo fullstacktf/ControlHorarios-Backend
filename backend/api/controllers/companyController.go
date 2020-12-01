@@ -12,10 +12,7 @@ import (
 	"github.com/gin-gonic/gin/binding"
 )
 
-type CompanyRepository struct{}
-
 func CreateCompany(c *gin.Context) {
-
 	var userCompany models.UserCompany
 	err := c.ShouldBindWith(&userCompany, binding.JSON)
 
@@ -36,7 +33,6 @@ func CreateCompany(c *gin.Context) {
 }
 
 func GetCompany(c *gin.Context) {
-
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	company := domain.GetCompany(id)
@@ -62,7 +58,6 @@ func CreateProject(c *gin.Context) {
 }
 
 func CreateHoliday(c *gin.Context) {
-
 	var holidayCompany models.Holidays
 
 	err := c.ShouldBindWith(&holidayCompany, binding.JSON)
@@ -73,7 +68,6 @@ func CreateHoliday(c *gin.Context) {
 	}
 
 	domain.CreateHoliday(holidayCompany, c)
-
 }
 
 func CreateSection(c *gin.Context) {
@@ -87,5 +81,44 @@ func CreateSection(c *gin.Context) {
 	}
 
 	domain.CreateSection(section, c)
+}
 
+func GetHolidays(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	holidays := domain.GetHolidays(id)
+	if len(holidays) == 0 {
+		c.JSON(http.StatusNotFound, "Holidays list not found")
+	} else {
+		c.JSON(http.StatusOK, gin.H{"data": holidays})
+	}
+}
+
+func GetEmployees(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	employees := domain.GetEmployees(id)
+	if len(employees) == 0 {
+		c.JSON(http.StatusNotFound, "Employee list not found")
+	} else {
+		c.JSON(http.StatusOK, gin.H{"data": employees})
+	}
+}
+
+func GetProjects(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	projects := domain.GetProjects(id)
+	if len(projects) == 0 {
+		c.JSON(http.StatusNotFound, "Project list not found")
+	} else {
+		c.JSON(http.StatusOK, gin.H{"data": projects})
+	}
+}
+
+func GetSections(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	sections := domain.GetSections(id)
+	if len(sections) == 0 {
+		c.JSON(http.StatusNotFound, "Project list not found")
+	} else {
+		c.JSON(http.StatusOK, gin.H{"data": sections})
+	}
 }
