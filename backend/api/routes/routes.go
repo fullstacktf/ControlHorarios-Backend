@@ -32,8 +32,8 @@ func SetupRouter() *gin.Engine {
 		companies.GET("/:id/employees", controllers.GetEmployees)
 		companies.GET("/:id/projects", controllers.GetProjects)
 		companies.GET("/:id/sections", controllers.GetSections)
-		companies.GET("/:id", controllers.GetCompany) //test
 
+		companies.GET("/:id", controllers.GetCompany)  //test
 		companies.POST("/", controllers.CreateCompany) //test
 
 		companies.POST("/:id/projects", controllers.CreateProject)
@@ -43,7 +43,6 @@ func SetupRouter() *gin.Engine {
 		/*companies.PUT("/:id/projects")
 		companies.PUT("/:id/sections")
 		companies.PUT("/:id/holidays")
-
 		companies.DELETE("/:id/holidays")*/
 	}
 	return r
