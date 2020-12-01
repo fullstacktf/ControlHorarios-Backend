@@ -53,3 +53,55 @@ func TestGetSectionsShouldReturn200(t *testing.T) {
 		Status(http.StatusOK).
 		End()
 }
+
+func TestGetCompanyByIdShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Get("/api/companies/1").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestCreateCompnayShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Post("/api/companies/").
+		Body(`{
+			"User":{
+			   "Username": "eoi",
+			   "Email": "eoi@eoi.eoi",
+			   "Password": "123eoi",
+			   "Rol": "Company"
+		   },
+		   "Company": {
+			   "CompanyName": "eoi",
+			   "Location": "eoi"
+		   }
+	   }`).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestCreateSectionShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Post("/api/companies/1/sections").
+		Body(`{"SectionName": "Testing"}`).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestCreateHolidayShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Post("/api/companies/1/sections").
+		Body(`{"holidayTitle": "Testing",
+				"holidayDate": "2006-01-02T15:04:05Z"
+		}`).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
