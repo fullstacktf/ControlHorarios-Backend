@@ -122,3 +122,68 @@ func GetSections(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": sections})
 	}
 }
+
+func UpdateProject(c *gin.Context) {
+	var projectDto dto.ProjectDto
+	c.BindJSON(&projectDto)
+	if projectDto.ProjectName == "" {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos")
+	}
+
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := domain.UpdateProjectName(id, projectDto)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error updating project"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "Project updated successfully"})
+	}
+}
+
+func UpdateSections(c *gin.Context) {
+	var sectionDto dto.UpdateSectionsRequestDto
+	c.BindJSON(&sectionDto)
+	if sectionDto.SectionName == "" {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos")
+	}
+
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := domain.UpdateSectionName(id, sectionDto)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error updating project"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "Project updated successfully"})
+	}
+}
+
+func UpdateHolidays(c *gin.Context) {
+	var holidaysDto dto.UpdateHolidaysRequestDto
+	c.BindJSON(&holidaysDto)
+	if holidaysDto.HolidaysName == "" || holidaysDto.NewDate == "" {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos")
+	}
+
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := domain.UpdateHolidaysName(id, holidaysDto)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error updating holidays"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "Holidays updated successfully"})
+	}
+}
+
+func DeleteHolidays(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	dbErr := domain.DeleteHolidays(id)
+	if dbErr != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error deleting holidays"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "Holidays deleted successfully"})
+	}
+}

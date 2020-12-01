@@ -3,6 +3,7 @@ package controllers
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
@@ -65,7 +66,6 @@ func UpdateEmployeePassword(c *gin.Context) {
 }
 
 func GetSummary(c *gin.Context) {
-
 	var records []models.EmployeeRecord
 
 	summary := domain.GetSummary(records, c)
@@ -74,5 +74,16 @@ func GetSummary(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, gin.H{"data": summary})
 	}
+}
 
+func GetEmployee(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	employee := domain.GetEmployee(id)
+
+	if employee.EmployeeID == 0 {
+		c.JSON(http.StatusNotFound, "Employee not found")
+	} else {
+		c.JSON(http.StatusOK, gin.H{"data": employee})
+	}
 }

@@ -9,19 +9,15 @@ func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	user := r.Group("/api/user")
 	{
-
 		user.POST("/login", controllers.UserLogin)
 	}
 
 	employees := r.Group("/api/employee")
 	{
-		// employees.GET("/:id")
-
-		employees.GET("/:id/summary", controllers.GetSummary) //test
-
-		employees.POST("/:id", controllers.CreateEmployee)        //test
-		employees.POST("/:id/checkin", controllers.CreateCheckIn) //test
-
+		employees.GET("/:id", controllers.GetEmployee)
+		employees.GET("/:id/summary", controllers.GetSummary)              //test
+		employees.POST("/:id", controllers.CreateEmployee)                 //test
+		employees.POST("/:id/checkin", controllers.CreateCheckIn)          //test
 		employees.PUT("/:id/password", controllers.UpdateEmployeePassword) //test
 		employees.PUT("/:id/checkout/:idRecord", controllers.DoCheckOut)   //test
 	}
@@ -40,10 +36,10 @@ func SetupRouter() *gin.Engine {
 		companies.POST("/:id/holidays", controllers.CreateHoliday) //test
 		companies.POST("/:id/sections", controllers.CreateSection) //test
 
-		/*companies.PUT("/:id/projects")
-		companies.PUT("/:id/sections")
-		companies.PUT("/:id/holidays")
-		companies.DELETE("/:id/holidays")*/
+		companies.PUT("/:id/projects", controllers.UpdateProject)
+		companies.PUT("/:id/sections", controllers.UpdateSections)
+		companies.PUT("/:id/holidays", controllers.UpdateHolidays)
+		companies.DELETE("/:id/holidays", controllers.DeleteHolidays)
 	}
 	return r
 }

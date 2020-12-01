@@ -85,3 +85,7 @@ func GetSummary(records []models.EmployeeRecord, c *gin.Context) []models.Employ
 		Find(&records)
 	return records
 }
+
+func GetEmployee(id int) models.Employee {
+	return infrastructure.GetEmployee(id)
+}

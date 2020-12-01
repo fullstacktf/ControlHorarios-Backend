@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
+	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/routes"
 	"github.com/steinfletcher/apitest"
 )
@@ -49,6 +51,64 @@ func TestGetSectionsShouldReturn200(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter()).
 		Get("/api/companies/1/sections").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestUpdateProjectNameShouldReturn200(t *testing.T) {
+	project := models.Projects{ProjectID: 1, ProjectName: "League of Legends", CompanyID: 2}
+	infrastructure.DB().Create(&project)
+
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Put("/api/companies/1/projects").
+		Body(`{"ProjectName": "Liga de Leyendas"}`).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+
+	infrastructure.DB().Where("project_id = ?", 1).Delete(models.Projects{})
+}
+
+func TestUpdateSectionNameShouldReturn200(t *testing.T) {
+	project := models.Sections{SectionID: 666, SectionName: "Programming", CompanyID: 2}
+	infrastructure.DB().Create(&project)
+
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Put("/api/companies/666/sections").
+		Body(`{"SectionName": "Management"}`).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+
+	infrastructure.DB().Where("section_id = ?", 666).Delete(models.Sections{})
+}
+
+func TestUpdateHolidayNameShouldReturn200(t *testing.T) {
+	holidays := models.Holidays{HolidayID: 666, HolidayTitle: "Navidad", HolidayDate: "2022-10-12", CompanyID: 2}
+	infrastructure.DB().Create(&holidays)
+
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Put("/api/companies/666/holidays").
+		Body(`{"HolidaysName": "Carnaval",
+			  "NewDate": "2023-10-12"}`).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+
+	infrastructure.DB().Where("holiday_id = ?", 666).Delete(models.Holidays{})
+}
+
+func TestDeleteHolidayNameShouldReturn200(t *testing.T) {
+	holidays := models.Holidays{HolidayID: 666, HolidayTitle: "Navidad", HolidayDate: "2022-10-12", CompanyID: 2}
+	infrastructure.DB().Create(&holidays)
+
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Delete("/api/companies/666/holidays").
 		Expect(t).
 		Status(http.StatusOK).
 		End()

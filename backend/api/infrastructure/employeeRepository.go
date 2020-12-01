@@ -10,3 +10,10 @@ func GetEmployeeId(id int) int {
 
 	return employee.EmployeeID
 }
+
+func GetEmployee(id int) models.Employee {
+	var employee models.Employee
+	DB().Debug().Where("employee_id = ?", id).First(&employee)
+
+	return employee
+}

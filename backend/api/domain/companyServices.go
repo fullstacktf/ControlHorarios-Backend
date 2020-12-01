@@ -86,3 +86,19 @@ func GetSections(id int) []models.Sections {
 	infrastructure.DB().Debug().Where("company_id").Find(&sections)
 	return sections
 }
+
+func UpdateProjectName(id int, projectDto dto.ProjectDto) error {
+	return infrastructure.UpdateProjectName(id, projectDto.ProjectName)
+}
+
+func UpdateSectionName(id int, sectionDto dto.UpdateSectionsRequestDto) error {
+	return infrastructure.UpdateSectionName(id, sectionDto.SectionName)
+}
+
+func UpdateHolidaysName(id int, holidaysDto dto.UpdateHolidaysRequestDto) error {
+	return infrastructure.UpdateHolidaysName(id, holidaysDto.HolidaysName, holidaysDto.NewDate)
+}
+
+func DeleteHolidays(id int) error {
+	return infrastructure.DeleteHolidays(id)
+}
