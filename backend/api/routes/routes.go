@@ -15,11 +15,11 @@ func SetupRouter() *gin.Engine {
 	employees := r.Group("/api/employee")
 	{
 		employees.GET("/:id", controllers.GetEmployee)
-		employees.GET("/:id/summary", controllers.GetSummary)              //test
-		employees.POST("/:id", controllers.CreateEmployee)                 //test
-		employees.POST("/:id/checkin", controllers.CreateCheckIn)          //test
-		employees.PUT("/:id/password", controllers.UpdateEmployeePassword) //test
-		employees.PUT("/:id/checkout/:idRecord", controllers.DoCheckOut)   //test
+		employees.GET("/:id/summary", controllers.GetSummary)              
+		employees.POST("/:id", controllers.CreateEmployee)                 
+		employees.POST("/:id/checkin", controllers.CreateCheckIn)          
+		employees.PUT("/:id/password", controllers.UpdateEmployeePassword)
+		employees.PUT("/:id/checkout/:idRecord", controllers.DoCheckOut)
 	}
 
 	companies := r.Group("/api/companies")
@@ -29,12 +29,12 @@ func SetupRouter() *gin.Engine {
 		companies.GET("/:id/projects", controllers.GetProjects)
 		companies.GET("/:id/sections", controllers.GetSections)
 
-		companies.GET("/:id", controllers.GetCompany)  //test
-		companies.POST("/", controllers.CreateCompany) //test
+		companies.GET("/:id", controllers.GetCompany)
+		companies.POST("/", controllers.CreateCompany)
 
 		companies.POST("/:id/projects", controllers.CreateProject)
-		companies.POST("/:id/holidays", controllers.CreateHoliday) //test
-		companies.POST("/:id/sections", controllers.CreateSection) //test
+		companies.POST("/:id/holidays", controllers.CreateHoliday)
+		companies.POST("/:id/sections", controllers.CreateSection)
 
 		companies.PUT("/:id/projects", controllers.UpdateProject)
 		companies.PUT("/:id/sections", controllers.UpdateSections)

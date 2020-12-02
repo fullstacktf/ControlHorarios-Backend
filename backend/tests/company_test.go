@@ -102,13 +102,65 @@ func TestUpdateHolidayNameShouldReturn200(t *testing.T) {
 	infrastructure.DB().Where("holiday_id = ?", 666).Delete(models.Holidays{})
 }
 
-func TestDeleteHolidayNameShouldReturn200(t *testing.T) {
+func TestDeleteHolidayShouldReturn200(t *testing.T) {
 	holidays := models.Holidays{HolidayID: 666, HolidayTitle: "Navidad", HolidayDate: "2022-10-12", CompanyID: 2}
 	infrastructure.DB().Create(&holidays)
 
 	apitest.New().
 		Handler(routes.SetupRouter()).
 		Delete("/api/companies/666/holidays").
+    Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestGetCompanyByIdShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Get("/api/companies/1").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestCreateCompnayShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Post("/api/companies/").
+		Body(`{
+			"User":{
+			   "Username": "eoi",
+			   "Email": "eoi@eoi.eoi",
+			   "Password": "123eoi",
+			   "Rol": "Company"
+		   },
+		   "Company": {
+			   "CompanyName": "eoi",
+			   "Location": "eoi"
+		   }
+	   }`).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestCreateSectionShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Post("/api/companies/1/sections").
+		Body(`{"SectionName": "Testing"}`).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
+
+func TestCreateHolidayShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter()).
+		Post("/api/companies/1/holidays").
+		Body(`{"holidayTitle": "Testing",
+				"holidayDate": "2006-01-02"
+		}`).
 		Expect(t).
 		Status(http.StatusOK).
 		End()
