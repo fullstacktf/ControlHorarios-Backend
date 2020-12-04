@@ -69,7 +69,7 @@ jobs:
               cd docker-compose-back
               docker stop app_go
               docker container rm app_go
-              docker rmi flipday/backend:firsttry
+              docker rmi flipday/backend
               docker stop projectdb
               docker container rm projectdb
               docker rmi mariadb:10.5.6
