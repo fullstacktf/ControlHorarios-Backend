@@ -1,4 +1,4 @@
-FROM golang:1.15.3-alpine
+FROM golang:1.15.3
 ENV GO111MODULE=auto
 WORKDIR /app
 COPY . /app
