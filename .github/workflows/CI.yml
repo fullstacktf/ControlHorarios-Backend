@@ -1,0 +1,18 @@
+name: CI
+on: pull_request
+   
+jobs:
+  build-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: setup go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.15.3"
+
+      - name: Run build
+        run: cd backend/ && go build main.go
