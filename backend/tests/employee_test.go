@@ -12,7 +12,7 @@ import (
 
 func TestCreateEmployeeShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/employee/4").
 		Body(`{
 			"User":{
@@ -31,7 +31,6 @@ func TestCreateEmployeeShouldReturn200(t *testing.T) {
 		End()
 }
 
-
 func TestGetEmployeeShouldReturn200(t *testing.T) {
 	user := models.User{UserID: 666, Email: "johndoe@gmail.com", Password: "foo", Rol: "employee"}
 	infrastructure.DB().Create(&user)
@@ -39,12 +38,12 @@ func TestGetEmployeeShouldReturn200(t *testing.T) {
 	infrastructure.DB().Create(&employee)
 
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Get("/api/employee/666").
-    Expect(t).
+		Expect(t).
 		Status(http.StatusOK).
 		End()
-  
+
 	infrastructure.DB().Where("employee_id = ?", 666).Delete(models.Employee{})
 	infrastructure.DB().Where("user_id = ?", 666).Delete(models.User{})
 
@@ -52,7 +51,7 @@ func TestGetEmployeeShouldReturn200(t *testing.T) {
 
 func TestGetSummaryShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Get("/api/employee/2/summary").
 		Expect(t).
 		Status(http.StatusOK).
@@ -61,7 +60,7 @@ func TestGetSummaryShouldReturn200(t *testing.T) {
 
 func TestDoCheckInShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/employee/2/checkin").
 		Body(`{
 			"description":"Test del checkin"
@@ -73,7 +72,7 @@ func TestDoCheckInShouldReturn200(t *testing.T) {
 
 func TestDoCheckOutShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Put("/api/employee/2/checkout/70").
 		Expect(t).
 		Status(http.StatusOK).
@@ -82,7 +81,7 @@ func TestDoCheckOutShouldReturn200(t *testing.T) {
 
 func TestUpdateEmployeePasswordShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Put("/api/employee/2/password").
 		Body(`{
 			"password":"test"

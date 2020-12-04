@@ -7,5 +7,5 @@ import (
 var err error
 
 func main() {
-	routes.SetupRouter().Run(":8089")
+	routes.SetupRouter("172.28.1.1:3306").Run(":8080")
 }

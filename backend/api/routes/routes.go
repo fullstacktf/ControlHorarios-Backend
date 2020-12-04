@@ -2,10 +2,13 @@ package routes
 
 import (
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers"
+	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter() *gin.Engine {
+func SetupRouter(host string) *gin.Engine {
+	infrastructure.SetDatabaseHost(host)
+
 	r := gin.Default()
 	user := r.Group("/api/user")
 	{
@@ -15,9 +18,9 @@ func SetupRouter() *gin.Engine {
 	employees := r.Group("/api/employee")
 	{
 		employees.GET("/:id", controllers.GetEmployee)
-		employees.GET("/:id/summary", controllers.GetSummary)              
-		employees.POST("/:id", controllers.CreateEmployee)                 
-		employees.POST("/:id/checkin", controllers.CreateCheckIn)          
+		employees.GET("/:id/summary", controllers.GetSummary)
+		employees.POST("/:id", controllers.CreateEmployee)
+		employees.POST("/:id/checkin", controllers.CreateCheckIn)
 		employees.PUT("/:id/password", controllers.UpdateEmployeePassword)
 		employees.PUT("/:id/checkout/:idRecord", controllers.DoCheckOut)
 	}

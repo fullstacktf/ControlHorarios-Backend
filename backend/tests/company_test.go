@@ -12,7 +12,7 @@ import (
 
 func TestCreateProjectShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/companies/1/projects").
 		Body(`{"ProjectName": "Control Horarios 2"}`).
 		Expect(t).
@@ -22,7 +22,7 @@ func TestCreateProjectShouldReturn200(t *testing.T) {
 
 func TestGetHolidaysShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Get("/api/companies/1/holidays").
 		Expect(t).
 		Status(http.StatusOK).
@@ -31,7 +31,7 @@ func TestGetHolidaysShouldReturn200(t *testing.T) {
 
 func TestGetEmployeesShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Get("/api/companies/1/employees").
 		Expect(t).
 		Status(http.StatusOK).
@@ -40,7 +40,7 @@ func TestGetEmployeesShouldReturn200(t *testing.T) {
 
 func TestGetProjectsShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Get("/api/companies/1/projects").
 		Expect(t).
 		Status(http.StatusOK).
@@ -49,7 +49,7 @@ func TestGetProjectsShouldReturn200(t *testing.T) {
 
 func TestGetSectionsShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Get("/api/companies/1/sections").
 		Expect(t).
 		Status(http.StatusOK).
@@ -61,7 +61,7 @@ func TestUpdateProjectNameShouldReturn200(t *testing.T) {
 	infrastructure.DB().Create(&project)
 
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Put("/api/companies/1/projects").
 		Body(`{"ProjectName": "Liga de Leyendas"}`).
 		Expect(t).
@@ -76,7 +76,7 @@ func TestUpdateSectionNameShouldReturn200(t *testing.T) {
 	infrastructure.DB().Create(&project)
 
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Put("/api/companies/666/sections").
 		Body(`{"SectionName": "Management"}`).
 		Expect(t).
@@ -91,7 +91,7 @@ func TestUpdateHolidayNameShouldReturn200(t *testing.T) {
 	infrastructure.DB().Create(&holidays)
 
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Put("/api/companies/666/holidays").
 		Body(`{"HolidaysName": "Carnaval",
 			  "NewDate": "2023-10-12"}`).
@@ -107,16 +107,16 @@ func TestDeleteHolidayShouldReturn200(t *testing.T) {
 	infrastructure.DB().Create(&holidays)
 
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Delete("/api/companies/666/holidays").
-    Expect(t).
+		Expect(t).
 		Status(http.StatusOK).
 		End()
 }
 
 func TestGetCompanyByIdShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Get("/api/companies/1").
 		Expect(t).
 		Status(http.StatusOK).
@@ -125,7 +125,7 @@ func TestGetCompanyByIdShouldReturn200(t *testing.T) {
 
 func TestCreateCompnayShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/companies/").
 		Body(`{
 			"User":{
@@ -146,7 +146,7 @@ func TestCreateCompnayShouldReturn200(t *testing.T) {
 
 func TestCreateSectionShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/companies/1/sections").
 		Body(`{"SectionName": "Testing"}`).
 		Expect(t).
@@ -156,7 +156,7 @@ func TestCreateSectionShouldReturn200(t *testing.T) {
 
 func TestCreateHolidayShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/companies/1/holidays").
 		Body(`{"holidayTitle": "Testing",
 				"holidayDate": "2006-01-02"
