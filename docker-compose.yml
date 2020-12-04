@@ -19,7 +19,7 @@ services:
         ipv4_address: 172.28.1.1
 
   server:
-    build: flipday/backend
+    build: flipday/backend:firsttry
     container_name: "app_go"
     ports:
       - "8080:8080"
