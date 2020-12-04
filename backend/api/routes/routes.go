@@ -8,7 +8,6 @@ import (
 
 func SetupRouter(host string) *gin.Engine {
 	infrastructure.SetDatabaseHost(host)
-
 	r := gin.Default()
 	user := r.Group("/api/user")
 	{
