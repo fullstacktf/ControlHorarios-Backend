@@ -30,7 +30,6 @@ func SetupRouter(host string) *gin.Engine {
 		companies.GET("/:id/employees", controllers.GetEmployees)
 		companies.GET("/:id/projects", controllers.GetProjects)
 		companies.GET("/:id/sections", controllers.GetSections)
-
 		companies.GET("/:id", controllers.GetCompany)
 		companies.POST("/", controllers.CreateCompany)
 
