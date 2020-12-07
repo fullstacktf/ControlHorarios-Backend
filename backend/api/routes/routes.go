@@ -3,12 +3,19 @@ package routes
 import (
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func SetupRouter(host string) *gin.Engine {
 	infrastructure.SetDatabaseHost(host)
 	r := gin.Default()
+
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"*"}
+
+	r.Use(cors.New(config))
+
 	user := r.Group("/api/user")
 	{
 		user.POST("/login", controllers.UserLogin)
