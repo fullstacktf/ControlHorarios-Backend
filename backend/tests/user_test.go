@@ -10,7 +10,7 @@ import (
 
 func TestUserLoginShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter()).
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/user/login").
 		Body(`{
 			"Email": "johndoe@gmail.com",

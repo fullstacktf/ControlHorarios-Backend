@@ -14,6 +14,12 @@ type Tabler interface {
 	TableName() string
 }
 
+var Host string
+
+func SetDatabaseHost(host string) {
+	Host = host
+}
+
 var database *gorm.DB
 
 func DB() *gorm.DB {
@@ -28,7 +34,7 @@ func DB() *gorm.DB {
 
 	if database == nil {
 		var err error
-		database, err = gorm.Open(mysql.Open("root:root@tcp(localhost:3306)/controlhorarios?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{Logger: newLogger})
+		database, err = gorm.Open(mysql.Open("root:root@tcp("+Host+")/controlhorarios?charset=utf8mb4&parseTime=True&loc=Local"), &gorm.Config{Logger: newLogger})
 		if err != nil {
 			log.Fatal("error al conectar a la base de datos:", err)
 		}
