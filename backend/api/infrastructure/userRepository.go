@@ -13,3 +13,12 @@ func CreateUser(user models.User) int {
 	DB().Debug().Create(&user)
 	return user.UserID
 }
+
+func UpdatePassword(password string, id int) error {
+	result := DB().Debug().
+		Model(&models.User{}).
+		Where("user_id = ?", id).
+		Update("password", password)
+
+	return result.Error
+}

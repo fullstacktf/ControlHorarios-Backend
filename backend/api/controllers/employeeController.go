@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
@@ -9,7 +8,6 @@ import (
 	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 )
 
 func CreateEmployee(c *gin.Context) {
@@ -58,19 +56,6 @@ func DoCheckOut(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, gin.H{"message": "Checkout successful"})
 	}
-}
-
-func UpdateEmployeePassword(c *gin.Context) {
-	var user models.User
-
-	err := c.ShouldBindWith(&user, binding.JSON)
-
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
-	}
-
-	domain.UpdateEmployeePassword(user, c)
 }
 
 func GetSummary(c *gin.Context) {

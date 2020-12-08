@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"net/http"
 	"strconv"
 	"time"
 
@@ -27,28 +26,8 @@ func CheckOut(recordID int) error {
 	return infrastructure.UpdateRecordTimeOut(recordID, time.Now())
 }
 
-func UpdateEmployeePassword(user models.User, c *gin.Context) error {
-
-	id, _ := strconv.Atoi(c.Params.ByName("id"))
-
-	result := infrastructure.DB().Debug().
-		Model(&models.User{}).
-		Where("users.user_id = ?", id).
-		Updates(models.User{
-			Password: user.Password,
-		})
-
-	if result.Error != nil {
-		return result.Error
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "Updated password"})
-	return nil
-}
-
 func GetSummary(records []models.EmployeeRecord, c *gin.Context) []models.EmployeeRecord {
 	id, _ := strconv.Atoi(c.Params.ByName("id"))
-	println(id)
 	infrastructure.DB().
 		Select("record_id", "description", "start_time", "end_time", "employee_id").
 		Where("employee_id = ?", id).

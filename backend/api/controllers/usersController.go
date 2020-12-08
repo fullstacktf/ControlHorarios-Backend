@@ -65,3 +65,20 @@ func UserLogin(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Email or Password wrong"})
 	}
 }
+
+func UpdateUserPassword(c *gin.Context) {
+	var userDto dto.UpdateEmployeePasswordDto
+	err := c.BindJSON(&userDto)
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+	}
+	id, _ := strconv.Atoi(c.Params.ByName("id"))
+	DBErr := domain.UpdateUserPassword(userDto, id)
+
+	if DBErr != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Error updating password"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "Password updated successfuly"})
+	}
+}

@@ -38,3 +38,7 @@ func UserLogin(userLoginDto dto.UserLoginDto) dto.LoginResponseDto {
 	}
 	return dto.LoginResponseDto{UserID: user.UserID, SecondaryID: id, Rol: user.Rol}
 }
+
+func UpdateUserPassword(userDto dto.UpdateEmployeePasswordDto, userID int) error {
+	return infrastructure.UpdatePassword(userDto.Password, userID)
+}
