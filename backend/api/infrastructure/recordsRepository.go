@@ -18,3 +18,12 @@ func UpdateRecordTimeOut(recordID int, timeOut time.Time) error {
 		Update("end_time", timeOut)
 	return result.Error
 }
+
+func GetRecordsByID(id int) []models.EmployeeRecord {
+	var records []models.EmployeeRecord
+	DB().
+		Select("record_id", "description", "start_time", "end_time", "employee_id").
+		Where("employee_id = ?", id).
+		Find(&records)
+	return records
+}

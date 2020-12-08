@@ -1,13 +1,11 @@
 package domain
 
 import (
-	"strconv"
 	"time"
 
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
-	"github.com/gin-gonic/gin"
 )
 
 func CreateEmployee(employeeDto dto.CreateEmployeeRequestDto, companyID int) error {
@@ -26,13 +24,8 @@ func CheckOut(recordID int) error {
 	return infrastructure.UpdateRecordTimeOut(recordID, time.Now())
 }
 
-func GetSummary(records []models.EmployeeRecord, c *gin.Context) []models.EmployeeRecord {
-	id, _ := strconv.Atoi(c.Params.ByName("id"))
-	infrastructure.DB().
-		Select("record_id", "description", "start_time", "end_time", "employee_id").
-		Where("employee_id = ?", id).
-		Find(&records)
-	return records
+func GetSummary(employeeID int) []models.EmployeeRecord {
+	return infrastructure.GetRecordsByID(employeeID)
 }
 
 func GetEmployee(id int) models.Employee {

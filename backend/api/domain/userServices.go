@@ -7,19 +7,11 @@ import (
 )
 
 func GetAllUsers() []models.User {
-	var users []models.User
-	infrastructure.DB().Find(&users)
-	return users
+	return infrastructure.GetAllUsers()
 }
 
 func UpdateUser(id int, name string) error {
-	result := infrastructure.DB().Debug().
-		Model(&models.User{}).
-		Where("users.user_id = ?", id).
-		Updates(models.User{
-			Username: name,
-		})
-	return result.Error
+	return infrastructure.UpdateUserName(id, name)
 }
 
 func DeleteUser(id int) error {

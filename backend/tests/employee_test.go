@@ -48,7 +48,7 @@ func TestGetEmployeeShouldReturn200(t *testing.T) {
 func TestGetSummaryShouldReturn200(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
-		Get("/api/employee/2/summary").
+		Get("/api/employee/3/summary").
 		Expect(t).
 		Status(http.StatusOK).
 		End()

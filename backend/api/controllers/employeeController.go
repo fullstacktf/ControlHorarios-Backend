@@ -6,7 +6,6 @@ import (
 
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
-	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
 )
 
@@ -59,9 +58,8 @@ func DoCheckOut(c *gin.Context) {
 }
 
 func GetSummary(c *gin.Context) {
-	var records []models.EmployeeRecord
-
-	summary := domain.GetSummary(records, c)
+	employeeID, _ := strconv.Atoi(c.Params.ByName("id"))
+	summary := domain.GetSummary(employeeID)
 	if len(summary) == 0 {
 		c.JSON(http.StatusNotFound, "Records not found")
 	} else {
