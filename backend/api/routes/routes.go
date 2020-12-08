@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"time"
+
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/gin-contrib/cors"
@@ -10,11 +12,12 @@ import (
 func SetupRouter(host string) *gin.Engine {
 	infrastructure.SetDatabaseHost(host)
 	r := gin.Default()
-
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"*"}
-
-	r.Use(cors.New(config))
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"PUT", "GET", "POST", "DELETE"},
+		AllowHeaders: []string{"*"},
+		MaxAge:       12 * time.Hour,
+	}))
 
 	user := r.Group("/api/user")
 	{
