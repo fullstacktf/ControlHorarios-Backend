@@ -18,25 +18,13 @@ func CreateEmployee(employeeDto dto.CreateEmployeeRequestDto, companyID int) err
 	return infrastructure.CreateEmployee(employee)
 }
 
-func CreateCheckIn(checkInDto dto.CheckInRequestDto, employeeID int) (error, int) {
+func CheckIn(checkInDto dto.CheckInRequestDto, employeeID int) (error, int) {
 	record := models.EmployeeRecord{Description: checkInDto.Description, StartTime: time.Now(), EmployeeID: employeeID}
 	return infrastructure.CreateRecord(record)
 }
 
-func DoCheckOut(c *gin.Context) error {
-
-	timeOut := time.Now()
-	recordId, _ := strconv.Atoi(c.Params.ByName("idRecord"))
-	result := infrastructure.DB().Debug().
-		Model(models.EmployeeRecord{}).
-		Where("employee_records.record_id = ?", recordId).
-		Updates(models.EmployeeRecord{
-			EndTime: timeOut,
-		})
-	if result.Error != nil {
-		return result.Error
-	}
-	return nil
+func CheckOut(recordID int) error {
+	return infrastructure.UpdateRecordTimeOut(recordID, time.Now())
 }
 
 func UpdateEmployeePassword(user models.User, c *gin.Context) error {

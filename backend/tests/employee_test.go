@@ -69,7 +69,7 @@ func TestDoCheckInShouldReturn201(t *testing.T) {
 func TestDoCheckOutShouldReturn200(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
-		Put("/api/employee/2/checkout/70").
+		Put("/api/employee/2/checkout/71").
 		Expect(t).
 		Status(http.StatusOK).
 		End()

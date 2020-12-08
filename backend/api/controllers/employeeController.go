@@ -12,9 +12,6 @@ import (
 	"github.com/gin-gonic/gin/binding"
 )
 
-type EmployeeRepository struct {
-}
-
 func CreateEmployee(c *gin.Context) {
 	var employeeDto dto.CreateEmployeeRequestDto
 	err := c.BindJSON(&employeeDto)
@@ -29,7 +26,7 @@ func CreateEmployee(c *gin.Context) {
 	if DBError != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Error creating employee"})
 	} else {
-		c.AbortWithStatusJSON(http.StatusCreated, gin.H{"message": "Employee created successfully"})
+		c.JSON(http.StatusOK, gin.H{"message": "Employee created successfully"})
 	}
 }
 
@@ -42,7 +39,7 @@ func CreateCheckIn(c *gin.Context) {
 	}
 
 	employeeID, _ := strconv.Atoi(c.Params.ByName("id"))
-	DBError, checkInID := domain.CreateCheckIn(checkInDto, employeeID)
+	DBError, checkInID := domain.CheckIn(checkInDto, employeeID)
 	if DBError != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error in check in"})
 	} else {
@@ -53,7 +50,14 @@ func CreateCheckIn(c *gin.Context) {
 }
 
 func DoCheckOut(c *gin.Context) {
-	domain.DoCheckOut(c)
+	recordID, _ := strconv.Atoi(c.Params.ByName("idRecord"))
+
+	DBError := domain.CheckOut(recordID)
+	if DBError != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error in check out"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "Checkout successful"})
+	}
 }
 
 func UpdateEmployeePassword(c *gin.Context) {
