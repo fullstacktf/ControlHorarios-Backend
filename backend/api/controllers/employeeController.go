@@ -34,16 +34,22 @@ func CreateEmployee(c *gin.Context) {
 }
 
 func CreateCheckIn(c *gin.Context) {
-	var employeeRecord models.EmployeeRecord
-
-	err := c.ShouldBindWith(&employeeRecord, binding.JSON)
+	var checkInDto dto.CheckInRequestDto
+	err := c.BindJSON(&checkInDto)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
 	}
 
-	domain.CreateCheckIn(employeeRecord, c)
+	employeeID, _ := strconv.Atoi(c.Params.ByName("id"))
+	DBError, checkInID := domain.CreateCheckIn(checkInDto, employeeID)
+	if DBError != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error in check in"})
+	} else {
+		c.JSON(http.StatusCreated, gin.H{
+			"message":  "New Record created successfully",
+			"recordID": checkInID})
+	}
 }
 
 func DoCheckOut(c *gin.Context) {
@@ -76,7 +82,6 @@ func GetSummary(c *gin.Context) {
 
 func GetEmployee(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-
 	employee := domain.GetEmployee(id)
 
 	if employee.EmployeeID == 0 {

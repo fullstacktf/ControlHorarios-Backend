@@ -54,7 +54,7 @@ func TestGetSummaryShouldReturn200(t *testing.T) {
 		End()
 }
 
-func TestDoCheckInShouldReturn200(t *testing.T) {
+func TestDoCheckInShouldReturn201(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/employee/2/checkin").
@@ -62,7 +62,7 @@ func TestDoCheckInShouldReturn200(t *testing.T) {
 			"description":"Test del checkin"
 	   }`).
 		Expect(t).
-		Status(http.StatusOK).
+		Status(http.StatusCreated).
 		End()
 }
 

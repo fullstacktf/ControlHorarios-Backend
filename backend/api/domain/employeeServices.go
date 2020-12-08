@@ -18,21 +18,9 @@ func CreateEmployee(employeeDto dto.CreateEmployeeRequestDto, companyID int) err
 	return infrastructure.CreateEmployee(employee)
 }
 
-func CreateCheckIn(employeeRecord models.EmployeeRecord, c *gin.Context) error {
-
-	employeeRecord.EmployeeID, _ = strconv.Atoi(c.Params.ByName("id"))
-	employeeRecord.StartTime = time.Now()
-	result := infrastructure.DB().Debug().Create(&employeeRecord)
-
-	if result.Error != nil {
-		return result.Error
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"message":  "New Record created successfully",
-		"recordID": employeeRecord.RecordID})
-	return nil
-
+func CreateCheckIn(checkInDto dto.CheckInRequestDto, employeeID int) (error, int) {
+	record := models.EmployeeRecord{Description: checkInDto.Description, StartTime: time.Now(), EmployeeID: employeeID}
+	return infrastructure.CreateRecord(record)
 }
 
 func DoCheckOut(c *gin.Context) error {
