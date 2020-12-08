@@ -30,7 +30,7 @@ func SetupRouter(host string) *gin.Engine {
 		employees.GET("/:id/summary", controllers.GetSummary)
 		employees.POST("/:id", controllers.CreateEmployee)
 		employees.POST("/:id/checkin", controllers.CreateCheckIn)
-		employees.PUT("/:id/password", controllers.UpdateEmployeePassword)
+		employees.PUT("/:id/password", controllers.UpdateUserPassword)
 		employees.PUT("/:id/checkout/:idRecord", controllers.DoCheckOut)
 	}
 

@@ -2,8 +2,8 @@ package models
 
 type Holidays struct {
 	HolidayID    int    `gorm:"column:holiday_id;primaryKey"`
-	HolidayTitle string `gorm:"column:holiday_title;type:varchar(50); NOT NULL json:"holidayTitle"`
-	HolidayDate  string `gorm:"column:holiday_date;holiday_date; NOT NULL json:"holidayDate"`
+	HolidayTitle string `gorm:"column:holiday_title;type:varchar(50);`
+	HolidayDate  string `gorm:"column:holiday_date;holiday_date;`
 	CompanyID    int
 	Company      Company `gorm:"foreignKey:CompanyID"`
 }
