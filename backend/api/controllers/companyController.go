@@ -18,12 +18,15 @@ func CreateCompany(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
 	}
 
-	DBError := domain.CreateCompany(companyDto)
+	DBError, companyID := domain.CreateCompany(companyDto)
 
 	if DBError != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error saving company"})
 	} else {
-		c.AbortWithStatusJSON(http.StatusCreated, gin.H{"message": "Company created successfully"})
+		c.AbortWithStatusJSON(http.StatusCreated,
+			gin.H{"message": "Company created successfully",
+				"CompanyID": companyID,
+			})
 	}
 }
 

@@ -6,7 +6,7 @@ import (
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 )
 
-func CreateCompany(companyDto dto.CreateCompanyRequestDto) error {
+func CreateCompany(companyDto dto.CreateCompanyRequestDto) (error, int) {
 	user := models.User{Username: companyDto.Username, Password: companyDto.Password, Email: companyDto.Email, Rol: companyDto.Rol}
 	id := infrastructure.CreateUser(user)
 	company := models.Company{UserID: id, CompanyName: companyDto.CompanyName, Location: companyDto.Location}

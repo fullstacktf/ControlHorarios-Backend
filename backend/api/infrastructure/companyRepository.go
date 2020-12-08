@@ -8,9 +8,9 @@ func GetCompanyId(id int) int {
 	return company.CompanyID
 }
 
-func CreateCompany(company models.Company) error {
+func CreateCompany(company models.Company) (error, int) {
 	result := DB().Debug().Create(&company)
-	return result.Error
+	return result.Error, company.CompanyID
 }
 
 func GetCompany(id int) models.Company {
