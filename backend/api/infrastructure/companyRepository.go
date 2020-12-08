@@ -12,3 +12,9 @@ func CreateCompany(company models.Company) error {
 	result := DB().Debug().Create(&company)
 	return result.Error
 }
+
+func GetCompany(id int) models.Company {
+	var company models.Company
+	DB().Debug().First(&company, id)
+	return company
+}

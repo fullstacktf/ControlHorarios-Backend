@@ -33,7 +33,11 @@ func GetCompany(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	company := domain.GetCompany(id)
-	c.JSON(http.StatusOK, gin.H{"data": company})
+	if company.UserID == 0 {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error finding Company"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"data": company})
+	}
 }
 
 func CreateProject(c *gin.Context) {

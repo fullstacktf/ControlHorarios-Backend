@@ -18,10 +18,7 @@ func CreateCompany(companyDto dto.CreateCompanyRequestDto) error {
 }
 
 func GetCompany(id int) models.Company {
-	var company models.Company
-	infrastructure.DB().First(&company, id)
-
-	return company
+	return infrastructure.GetCompany(id)
 }
 
 func CreateProject(id int, projectDto dto.ProjectDto) error {
