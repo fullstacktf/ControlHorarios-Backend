@@ -1,66 +1,33 @@
 package domain
 
 import (
-	"net/http"
-	"strconv"
-
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
-	"github.com/gin-gonic/gin"
 )
 
-func CreateCompany(company models.UserCompany, c *gin.Context, id int) error {
-
-	company.Company.UserID = id
-
-	result := infrastructure.DB().Debug().
-		Select(`Company.location, Company.company_name`).Create(&company.Company)
-	if result.Error != nil {
-		return result.Error
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "New company created successfully"})
-	return nil
+func CreateCompany(companyDto dto.CreateCompanyRequestDto) (error, int) {
+	user := models.User{Username: companyDto.Username, Password: companyDto.Password, Email: companyDto.Email, Rol: companyDto.Rol}
+	id := infrastructure.CreateUser(user)
+	company := models.Company{UserID: id, CompanyName: companyDto.CompanyName, Location: companyDto.Location}
+	return infrastructure.CreateCompany(company)
 }
 
 func GetCompany(id int) models.Company {
-	var company models.Company
-	infrastructure.DB().First(&company, id)
-
-	return company
+	return infrastructure.GetCompany(id)
 }
 
 func CreateProject(id int, projectDto dto.ProjectDto) error {
 	return infrastructure.InsertProject(id, projectDto.ProjectName)
 }
 
-func CreateHoliday(holidayCompany models.Holidays, c *gin.Context) error {
-
-	holidayCompany.CompanyID, _ = strconv.Atoi(c.Params.ByName("id"))
-
-	result := infrastructure.DB().Debug().Create(&holidayCompany)
-
-	if result.Error != nil {
-		return result.Error
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "New Holiday created successfully"})
-
-	return nil
+func CreateHoliday(holidayDto dto.CreateHolidaysRequestDto, companyId int) error {
+	holidays := models.Holidays{HolidayTitle: holidayDto.Title, HolidayDate: holidayDto.Date, CompanyID: companyId}
+	return infrastructure.CreateHolidays(holidays)
 }
 
-func CreateSection(section models.Sections, c *gin.Context) error {
-
-	section.CompanyID, _ = strconv.Atoi(c.Params.ByName("id"))
-
-	result := infrastructure.DB().Debug().Create(&section)
-	if result.Error != nil {
-		return result.Error
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "New section created successfully"})
-	return nil
+func CreateSection(sectionDto dto.CreateSectionDto, companyId int) error {
+	return infrastructure.CreateSection(models.Sections{SectionName: sectionDto.SectionName, CompanyID: companyId})
 }
 
 func GetHolidays(id int) []models.Holidays {

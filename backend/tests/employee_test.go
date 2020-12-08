@@ -15,19 +15,15 @@ func TestCreateEmployeeShouldReturn200(t *testing.T) {
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/employee/4").
 		Body(`{
-			"User":{
 			   "Username": "Ana",
 			   "Email": "ana@ana.ana",
 			   "Password": "123Ana",
-			   "Rol": "Employee"
-		   },
-		   "Employee": {
+			   "Rol": "Employee",
 			   "firstName": "ana",
 			   "lastName": "ana"
-		   }
 	   }`).
 		Expect(t).
-		Status(http.StatusOK).
+		Status(http.StatusCreated).
 		End()
 }
 
@@ -52,13 +48,13 @@ func TestGetEmployeeShouldReturn200(t *testing.T) {
 func TestGetSummaryShouldReturn200(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
-		Get("/api/employee/2/summary").
+		Get("/api/employee/3/summary").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
 }
 
-func TestDoCheckInShouldReturn200(t *testing.T) {
+func TestDoCheckInShouldReturn201(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/employee/2/checkin").
@@ -66,26 +62,14 @@ func TestDoCheckInShouldReturn200(t *testing.T) {
 			"description":"Test del checkin"
 	   }`).
 		Expect(t).
-		Status(http.StatusOK).
+		Status(http.StatusCreated).
 		End()
 }
 
 func TestDoCheckOutShouldReturn200(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
-		Put("/api/employee/2/checkout/70").
-		Expect(t).
-		Status(http.StatusOK).
-		End()
-}
-
-func TestUpdateEmployeePasswordShouldReturn200(t *testing.T) {
-	apitest.New().
-		Handler(routes.SetupRouter("127.0.0.1:3306")).
-		Put("/api/employee/2/password").
-		Body(`{
-			"password":"test"
-	   	}`).
+		Put("/api/employee/2/checkout/71").
 		Expect(t).
 		Status(http.StatusOK).
 		End()

@@ -13,3 +13,8 @@ func DeleteHolidays(id int) error {
 	result := DB().Debug().Where("holiday_id = ?", id).Delete(models.Holidays{})
 	return result.Error
 }
+
+func CreateHolidays(holidays models.Holidays) error {
+	result := DB().Debug().Create(&holidays)
+	return result.Error
+}

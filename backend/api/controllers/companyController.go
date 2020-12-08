@@ -7,48 +7,50 @@ import (
 
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
-	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 )
 
 func CreateCompany(c *gin.Context) {
-	var userCompany models.UserCompany
-	err := c.ShouldBindWith(&userCompany, binding.JSON)
+	var companyDto dto.CreateCompanyRequestDto
+	err := c.BindJSON(&companyDto)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
 	}
 
-	_, id := domain.CreateUser(userCompany, c)
+	DBError, companyID := domain.CreateCompany(companyDto)
 
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
-		return
+	if DBError != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error saving company"})
+	} else {
+		c.AbortWithStatusJSON(http.StatusCreated,
+			gin.H{"message": "Company created successfully",
+				"CompanyID": companyID,
+			})
 	}
-
-	domain.CreateCompany(userCompany, c, id)
 }
 
 func GetCompany(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-
 	company := domain.GetCompany(id)
-	c.JSON(http.StatusOK, gin.H{"data": company})
+
+	if company.UserID == 0 {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error finding Company"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"data": company})
+	}
 }
 
 func CreateProject(c *gin.Context) {
 	var projectDto dto.ProjectDto
 	c.BindJSON(&projectDto)
+
 	if projectDto.ProjectName == "" {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos")
 	}
 
-	id, _ := strconv.Atoi(c.Param("id"))
-	err := domain.CreateProject(id, projectDto)
+	companyId, _ := strconv.Atoi(c.Param("id"))
+	err := domain.CreateProject(companyId, projectDto)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error creating project"})
@@ -58,29 +60,38 @@ func CreateProject(c *gin.Context) {
 }
 
 func CreateHoliday(c *gin.Context) {
-	var holidayCompany models.Holidays
-
-	err := c.ShouldBindWith(&holidayCompany, binding.JSON)
+	var holiday dto.CreateHolidaysRequestDto
+	err := c.BindJSON(&holiday)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
 	}
+	companyId, _ := strconv.Atoi(c.Param("id"))
+	DBError := domain.CreateHoliday(holiday, companyId)
 
-	domain.CreateHoliday(holidayCompany, c)
+	if DBError != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error saving holidays"})
+	} else {
+		c.JSON(http.StatusCreated, gin.H{"message": "Holidays created successfully"})
+	}
 }
 
 func CreateSection(c *gin.Context) {
-	var section models.Sections
-
-	err := c.ShouldBindWith(&section, binding.JSON)
+	var sectionDto dto.CreateSectionDto
+	err := c.BindJSON(&sectionDto)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
 	}
 
-	domain.CreateSection(section, c)
+	companyID, _ := strconv.Atoi(c.Params.ByName("id"))
+	DBError := domain.CreateSection(sectionDto, companyID)
+
+	if DBError != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error saving section"})
+	} else {
+		c.JSON(http.StatusCreated, gin.H{"message": "Section created successfully"})
+	}
 }
 
 func GetHolidays(c *gin.Context) {

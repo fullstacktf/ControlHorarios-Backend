@@ -1,52 +1,17 @@
 package domain
 
 import (
-	"net/http"
-
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
-	"github.com/gin-gonic/gin"
 )
 
 func GetAllUsers() []models.User {
-	var users []models.User
-	infrastructure.DB().Find(&users)
-	return users
-}
-
-func CreateUser(user models.UserCompany, c *gin.Context) (error, int) {
-
-	result := infrastructure.DB().Debug().
-		Select(`User.username,User.email, User.password, User.rol`).Create(&user.User)
-	if result.Error != nil {
-		return result.Error, 0
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "New user created successfully"})
-	return nil, user.User.UserID
-}
-
-func CreateUserEmployee(user models.UserEmployee, c *gin.Context) (error, int) {
-
-	result := infrastructure.DB().Debug().
-		Select(`User.username,User.email, User.password, User.rol`).Create(&user.User)
-	if result.Error != nil {
-		return result.Error, 0
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "New user created successfully"})
-	return nil, user.User.UserID
+	return infrastructure.GetAllUsers()
 }
 
 func UpdateUser(id int, name string) error {
-	result := infrastructure.DB().Debug().
-		Model(&models.User{}).
-		Where("users.user_id = ?", id).
-		Updates(models.User{
-			Username: name,
-		})
-	return result.Error
+	return infrastructure.UpdateUserName(id, name)
 }
 
 func DeleteUser(id int) error {
@@ -64,4 +29,8 @@ func UserLogin(userLoginDto dto.UserLoginDto) dto.LoginResponseDto {
 		id = infrastructure.GetCompanyId(user.UserID)
 	}
 	return dto.LoginResponseDto{UserID: user.UserID, SecondaryID: id, Rol: user.Rol}
+}
+
+func UpdateUserPassword(userDto dto.UpdateEmployeePasswordDto, userID int) error {
+	return infrastructure.UpdatePassword(userDto.Password, userID)
 }

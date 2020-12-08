@@ -25,3 +25,15 @@ func TestUserLoginShouldReturn200(t *testing.T) {
 		Status(http.StatusOK).
 		End()
 }
+
+func TestUpdateUserPasswordShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
+		Put("/api/employee/1/password").
+		Body(`{
+			"password":"test"
+	   	}`).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
