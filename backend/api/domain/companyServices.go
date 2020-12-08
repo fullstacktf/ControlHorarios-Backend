@@ -10,18 +10,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CreateCompany(company models.UserCompany, c *gin.Context, id int) error {
-
-	company.Company.UserID = id
-
-	result := infrastructure.DB().Debug().
-		Select(`Company.location, Company.company_name`).Create(&company.Company)
-	if result.Error != nil {
-		return result.Error
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "New company created successfully"})
-	return nil
+func CreateCompany(companyDto dto.CreateCompanyRequestDto) error {
+	user := models.User{Username: companyDto.Username, Password: companyDto.Password, Email: companyDto.Email, Rol: companyDto.Rol}
+	id := infrastructure.CreateUser(user)
+	company := models.Company{UserID: id, CompanyName: companyDto.CompanyName, Location: companyDto.Location}
+	return infrastructure.CreateCompany(company)
 }
 
 func GetCompany(id int) models.Company {

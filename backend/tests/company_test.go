@@ -123,24 +123,20 @@ func TestGetCompanyByIdShouldReturn200(t *testing.T) {
 		End()
 }
 
-func TestCreateCompnayShouldReturn200(t *testing.T) {
+func TestCreateCompanyShouldReturn200(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/companies/").
 		Body(`{
-			"User":{
 			   "Username": "eoi",
 			   "Email": "eoi@eoi.eoi",
 			   "Password": "123eoi",
-			   "Rol": "Company"
-		   },
-		   "Company": {
+			   "Rol": "Company",
 			   "CompanyName": "eoi",
 			   "Location": "eoi"
-		   }
 	   }`).
 		Expect(t).
-		Status(http.StatusOK).
+		Status(http.StatusCreated).
 		End()
 }
 

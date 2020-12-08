@@ -6,6 +6,7 @@ require (
 	github.com/buger/jsonparser v1.0.0
 	github.com/canthefason/go-watcher v0.2.4 // indirect
 	github.com/fatih/color v1.10.0 // indirect
+	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-gonic/gin v1.6.3
 	github.com/joho/godotenv v1.3.0
 	github.com/steinfletcher/apitest v1.4.16

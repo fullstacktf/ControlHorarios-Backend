@@ -13,23 +13,20 @@ import (
 )
 
 func CreateCompany(c *gin.Context) {
-	var userCompany models.UserCompany
-	err := c.ShouldBindWith(&userCompany, binding.JSON)
+	var companyDto dto.CreateCompanyRequestDto
+	err := c.BindJSON(&companyDto)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
 	}
 
-	_, id := domain.CreateUser(userCompany, c)
+	DBError := domain.CreateCompany(companyDto)
 
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
-		return
+	if DBError != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error saving company"})
+	} else {
+		c.AbortWithStatusJSON(http.StatusCreated, gin.H{"message": "Company created successfully"})
 	}
-
-	domain.CreateCompany(userCompany, c, id)
 }
 
 func GetCompany(c *gin.Context) {

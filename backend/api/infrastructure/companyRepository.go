@@ -7,3 +7,8 @@ func GetCompanyId(id int) int {
 	DB().Debug().Where("user_id = ?", id).First(&company)
 	return company.CompanyID
 }
+
+func CreateCompany(company models.Company) error {
+	result := DB().Debug().Create(&company)
+	return result.Error
+}
