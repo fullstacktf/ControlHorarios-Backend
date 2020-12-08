@@ -16,7 +16,6 @@ func CreateEmployee(employeeDto dto.CreateEmployeeRequestDto, companyID int) err
 	id := infrastructure.CreateUser(user)
 	employee := models.Employee{UserID: id, CompanyID: companyID, FirstName: employeeDto.FirstName, LastName: employeeDto.LastName}
 	return infrastructure.CreateEmployee(employee)
-
 }
 
 func CreateCheckIn(employeeRecord models.EmployeeRecord, c *gin.Context) error {

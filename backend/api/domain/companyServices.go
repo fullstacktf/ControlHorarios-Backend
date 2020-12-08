@@ -25,19 +25,9 @@ func CreateProject(id int, projectDto dto.ProjectDto) error {
 	return infrastructure.InsertProject(id, projectDto.ProjectName)
 }
 
-func CreateHoliday(holidayCompany models.Holidays, c *gin.Context) error {
-
-	holidayCompany.CompanyID, _ = strconv.Atoi(c.Params.ByName("id"))
-
-	result := infrastructure.DB().Debug().Create(&holidayCompany)
-
-	if result.Error != nil {
-		return result.Error
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "New Holiday created successfully"})
-
-	return nil
+func CreateHoliday(holidayDto dto.CreateHolidaysRequestDto, companyId int) error {
+	holidays := models.Holidays{HolidayTitle: holidayDto.Title, HolidayDate: holidayDto.Date, CompanyID: companyId}
+	return infrastructure.CreateHolidays(holidays)
 }
 
 func CreateSection(section models.Sections, c *gin.Context) error {

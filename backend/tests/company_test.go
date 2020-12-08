@@ -150,14 +150,14 @@ func TestCreateSectionShouldReturn200(t *testing.T) {
 		End()
 }
 
-func TestCreateHolidayShouldReturn200(t *testing.T) {
+func TestCreateHolidayShouldReturn201(t *testing.T) {
 	apitest.New().
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/companies/1/holidays").
-		Body(`{"holidayTitle": "Testing",
-				"holidayDate": "2006-01-02"
+		Body(`{"Title": "Testing",
+			   "Date": "2006-01-02"
 		}`).
 		Expect(t).
-		Status(http.StatusOK).
+		Status(http.StatusCreated).
 		End()
 }

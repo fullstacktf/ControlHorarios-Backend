@@ -45,11 +45,10 @@ func CreateProject(c *gin.Context) {
 	c.BindJSON(&projectDto)
 	if projectDto.ProjectName == "" {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos")
 	}
 
-	id, _ := strconv.Atoi(c.Param("id"))
-	err := domain.CreateProject(id, projectDto)
+	companyId, _ := strconv.Atoi(c.Param("id"))
+	err := domain.CreateProject(companyId, projectDto)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error creating project"})
@@ -59,16 +58,21 @@ func CreateProject(c *gin.Context) {
 }
 
 func CreateHoliday(c *gin.Context) {
-	var holidayCompany models.Holidays
+	var holiday dto.CreateHolidaysRequestDto
 
-	err := c.ShouldBindWith(&holidayCompany, binding.JSON)
+	err := c.BindJSON(&holiday)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
 	}
+	companyId, _ := strconv.Atoi(c.Param("id"))
+	DBError := domain.CreateHoliday(holiday, companyId)
 
-	domain.CreateHoliday(holidayCompany, c)
+	if DBError != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error saving holidays"})
+	} else {
+		c.JSON(http.StatusCreated, gin.H{"message": "Holidays created successfully"})
+	}
 }
 
 func CreateSection(c *gin.Context) {
@@ -78,7 +82,6 @@ func CreateSection(c *gin.Context) {
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
 	}
 
 	domain.CreateSection(section, c)
