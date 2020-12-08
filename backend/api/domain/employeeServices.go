@@ -5,23 +5,18 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
 )
 
-func CreateEmployee(employee models.UserEmployee, c *gin.Context, id int) error {
+func CreateEmployee(employeeDto dto.CreateEmployeeRequestDto, companyID int) error {
+	user := models.User{Username: employeeDto.Username, Password: employeeDto.Password, Email: employeeDto.Email, Rol: employeeDto.Rol}
+	id := infrastructure.CreateUser(user)
+	employee := models.Employee{UserID: id, CompanyID: companyID, FirstName: employeeDto.FirstName, LastName: employeeDto.LastName}
+	return infrastructure.CreateEmployee(employee)
 
-	employee.Employee.UserID = id
-	employee.Employee.CompanyID, _ = strconv.Atoi(c.Params.ByName("id"))
-	result := infrastructure.DB().Debug().
-		Select(`Employee.first_name, Employee.last_name`).Create(&employee.Employee)
-	if result.Error != nil {
-		return result.Error
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "New employee created successfully"})
-	return nil
 }
 
 func CreateCheckIn(employeeRecord models.EmployeeRecord, c *gin.Context) error {

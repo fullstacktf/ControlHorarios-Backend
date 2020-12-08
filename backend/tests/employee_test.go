@@ -15,19 +15,15 @@ func TestCreateEmployeeShouldReturn200(t *testing.T) {
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
 		Post("/api/employee/4").
 		Body(`{
-			"User":{
 			   "Username": "Ana",
 			   "Email": "ana@ana.ana",
 			   "Password": "123Ana",
-			   "Rol": "Employee"
-		   },
-		   "Employee": {
+			   "Rol": "Employee",
 			   "firstName": "ana",
 			   "lastName": "ana"
-		   }
 	   }`).
 		Expect(t).
-		Status(http.StatusOK).
+		Status(http.StatusCreated).
 		End()
 }
 

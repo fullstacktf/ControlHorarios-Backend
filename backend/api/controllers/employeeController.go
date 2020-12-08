@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
@@ -15,24 +16,21 @@ type EmployeeRepository struct {
 }
 
 func CreateEmployee(c *gin.Context) {
-	var userEmployee models.UserEmployee
-
-	err := c.ShouldBindWith(&userEmployee, binding.JSON)
-
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
-	}
-
-	_, id := domain.CreateUserEmployee(userEmployee, c)
+	var employeeDto dto.CreateEmployeeRequestDto
+	err := c.BindJSON(&employeeDto)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-		log.Println("Error al bindear datos", err)
-		return
 	}
 
-	domain.CreateEmployee(userEmployee, c, id)
+	companyID, _ := strconv.Atoi(c.Params.ByName("id"))
+	DBError := domain.CreateEmployee(employeeDto, companyID)
+
+	if DBError != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Error creating employee"})
+	} else {
+		c.AbortWithStatusJSON(http.StatusCreated, gin.H{"message": "Employee created successfully"})
+	}
 }
 
 func CreateCheckIn(c *gin.Context) {

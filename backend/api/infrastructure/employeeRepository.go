@@ -16,3 +16,8 @@ func GetEmployee(id int) models.Employee {
 
 	return employee
 }
+
+func CreateEmployee(employee models.Employee) error {
+	result := DB().Debug().Create(&employee)
+	return result.Error
+}
