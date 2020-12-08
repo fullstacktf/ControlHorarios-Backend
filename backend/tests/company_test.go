@@ -146,7 +146,7 @@ func TestCreateSectionShouldReturn200(t *testing.T) {
 		Post("/api/companies/1/sections").
 		Body(`{"SectionName": "Testing"}`).
 		Expect(t).
-		Status(http.StatusOK).
+		Status(http.StatusCreated).
 		End()
 }
 

@@ -1,13 +1,9 @@
 package domain
 
 import (
-	"net/http"
-	"strconv"
-
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
-	"github.com/gin-gonic/gin"
 )
 
 func CreateCompany(companyDto dto.CreateCompanyRequestDto) error {
@@ -30,17 +26,8 @@ func CreateHoliday(holidayDto dto.CreateHolidaysRequestDto, companyId int) error
 	return infrastructure.CreateHolidays(holidays)
 }
 
-func CreateSection(section models.Sections, c *gin.Context) error {
-
-	section.CompanyID, _ = strconv.Atoi(c.Params.ByName("id"))
-
-	result := infrastructure.DB().Debug().Create(&section)
-	if result.Error != nil {
-		return result.Error
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "New section created successfully"})
-	return nil
+func CreateSection(sectionDto dto.CreateSectionDto, companyId int) error {
+	return infrastructure.CreateSection(models.Sections{SectionName: sectionDto.SectionName, CompanyID: companyId})
 }
 
 func GetHolidays(id int) []models.Holidays {

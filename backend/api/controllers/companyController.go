@@ -7,9 +7,7 @@ import (
 
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
-	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 )
 
 func CreateCompany(c *gin.Context) {
@@ -31,8 +29,8 @@ func CreateCompany(c *gin.Context) {
 
 func GetCompany(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-
 	company := domain.GetCompany(id)
+
 	if company.UserID == 0 {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error finding Company"})
 	} else {
@@ -43,6 +41,7 @@ func GetCompany(c *gin.Context) {
 func CreateProject(c *gin.Context) {
 	var projectDto dto.ProjectDto
 	c.BindJSON(&projectDto)
+
 	if projectDto.ProjectName == "" {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
 	}
@@ -59,7 +58,6 @@ func CreateProject(c *gin.Context) {
 
 func CreateHoliday(c *gin.Context) {
 	var holiday dto.CreateHolidaysRequestDto
-
 	err := c.BindJSON(&holiday)
 
 	if err != nil {
@@ -76,15 +74,21 @@ func CreateHoliday(c *gin.Context) {
 }
 
 func CreateSection(c *gin.Context) {
-	var section models.Sections
-
-	err := c.ShouldBindWith(&section, binding.JSON)
+	var sectionDto dto.CreateSectionDto
+	err := c.BindJSON(&sectionDto)
 
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
 	}
 
-	domain.CreateSection(section, c)
+	companyID, _ := strconv.Atoi(c.Params.ByName("id"))
+	DBError := domain.CreateSection(sectionDto, companyID)
+
+	if DBError != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error saving section"})
+	} else {
+		c.JSON(http.StatusCreated, gin.H{"message": "Section created successfully"})
+	}
 }
 
 func GetHolidays(c *gin.Context) {
