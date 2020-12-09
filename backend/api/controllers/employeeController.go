@@ -23,7 +23,7 @@ func CreateEmployee(c *gin.Context) {
 	if DBError != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Error creating employee"})
 	} else {
-		c.JSON(http.StatusOK, gin.H{"message": "Employee created successfully"})
+		c.JSON(http.StatusCreated, gin.H{"message": "Employee created successfully"})
 	}
 }
 
