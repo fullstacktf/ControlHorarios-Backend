@@ -38,19 +38,19 @@ func GetHolidays(id int) []models.Holidays {
 
 func GetEmployees(id int) []models.Employee {
 	var employees []models.Employee
-	infrastructure.DB().Debug().Where("company_id").Find(&employees)
+	infrastructure.DB().Debug().Where("company_id = ?", id).Find(&employees)
 	return employees
 }
 
 func GetProjects(id int) []models.Projects {
 	var projects []models.Projects
-	infrastructure.DB().Debug().Where("company_id").Find(&projects)
+	infrastructure.DB().Debug().Where("company_id  = ?", id).Find(&projects)
 	return projects
 }
 
 func GetSections(id int) []models.Sections {
 	var sections []models.Sections
-	infrastructure.DB().Debug().Where("company_id").Find(&sections)
+	infrastructure.DB().Debug().Where("company_id  = ?", id).Find(&sections)
 	return sections
 }
 
