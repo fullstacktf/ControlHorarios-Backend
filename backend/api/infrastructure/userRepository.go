@@ -18,7 +18,6 @@ func UpdatePassword(password string, id int) error {
 		Model(&models.User{}).
 		Where("user_id = ?", id).
 		Update("password", password)
-
 	return result.Error
 }
 
