@@ -31,27 +31,19 @@ func CreateSection(sectionDto dto.CreateSectionDto, companyId int) error {
 }
 
 func GetHolidays(id int) []models.Holidays {
-	var holidays []models.Holidays
-	infrastructure.DB().Debug().Where("company_id = ?", id).Find(&holidays)
-	return holidays
+	return infrastructure.GetHolidaysByCompanyID(id)
 }
 
 func GetEmployees(id int) []models.Employee {
-	var employees []models.Employee
-	infrastructure.DB().Debug().Where("company_id = ?", id).Find(&employees)
-	return employees
+	return infrastructure.GetEmployeesByCompanyID(id)
 }
 
 func GetProjects(id int) []models.Projects {
-	var projects []models.Projects
-	infrastructure.DB().Debug().Where("company_id  = ?", id).Find(&projects)
-	return projects
+	return infrastructure.GetProjectsByCompanyID(id)
 }
 
 func GetSections(id int) []models.Sections {
-	var sections []models.Sections
-	infrastructure.DB().Debug().Where("company_id  = ?", id).Find(&sections)
-	return sections
+	return infrastructure.GetSectionsByCompanyID(id)
 }
 
 func UpdateProjectName(id int, projectDto dto.ProjectDto) error {

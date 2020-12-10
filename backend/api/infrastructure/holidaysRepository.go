@@ -18,3 +18,9 @@ func CreateHolidays(holidays models.Holidays) error {
 	result := DB().Debug().Create(&holidays)
 	return result.Error
 }
+
+func GetHolidaysByCompanyID(id int) []models.Holidays {
+	var holidays []models.Holidays
+	DB().Debug().Where("company_id = ?", id).Find(&holidays)
+	return holidays
+}

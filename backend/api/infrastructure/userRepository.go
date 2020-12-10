@@ -29,6 +29,7 @@ func UpdateUserName(id int, name string) error {
 		Updates(models.User{
 			Username: name,
 		})
+
 	return result.Error
 }
 

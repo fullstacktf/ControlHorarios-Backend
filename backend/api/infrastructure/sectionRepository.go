@@ -11,3 +11,9 @@ func CreateSection(section models.Sections) error {
 	result := DB().Debug().Create(&section)
 	return result.Error
 }
+
+func GetSectionsByCompanyID(id int) []models.Sections {
+	var sections []models.Sections
+	DB().Debug().Where("company_id  = ?", id).Find(&sections)
+	return sections
+}

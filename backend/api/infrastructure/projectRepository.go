@@ -12,3 +12,9 @@ func InsertProject(id int, name string) error {
 	result := DB().Debug().Create(&project)
 	return result.Error
 }
+
+func GetProjectsByCompanyID(id int) []models.Projects {
+	var projects []models.Projects
+	DB().Debug().Where("company_id  = ?", id).Find(&projects)
+	return projects
+}
