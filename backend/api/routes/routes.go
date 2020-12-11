@@ -50,7 +50,10 @@ func SetupRouter(host string) *gin.Engine {
 		companies.PUT("/:id/projects", controllers.UpdateProject)
 		companies.PUT("/:id/sections", controllers.UpdateSections)
 		companies.PUT("/:id/holidays", controllers.UpdateHolidays)
+		companies.PUT("/:id/employees", controllers.UpdateEmployee)
+
 		companies.DELETE("/:id/holidays", controllers.DeleteHolidays)
+
 	}
 	return r
 }

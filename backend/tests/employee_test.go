@@ -23,7 +23,7 @@ func TestCreateEmployeeShouldReturn200(t *testing.T) {
 			   "LastName": "ana"
 	   }`).
 		Expect(t).
-		Status(http.StatusOK).
+		Status(http.StatusCreated).
 		End()
 }
 

@@ -1,5 +1,5 @@
 package dto
 
 type CheckInRequestDto struct {
-	Description string `json:Description"`
+	Description string `json:"Description"`
 }

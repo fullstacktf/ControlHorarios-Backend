@@ -23,6 +23,16 @@ func CreateEmployee(employee models.Employee) error {
 
 func GetEmployeesByCompanyID(id int) []models.Employee {
 	var employees []models.Employee
-	DB().Debug().Where("company_id = ?", id).Find(&employees)
+	DB().Debug().
+		Joins("User").
+		Joins("Company").
+		Where("employee.company_id = ?", id).
+		Find(&employees)
 	return employees
+}
+
+
+func UpdateEmployee(UserID int ) error {
+    result := DB().Debug().Model(&models.User{}).Where("user_id = ?", UserID).Update("password", "Inactive")
+    return result.Error
 }

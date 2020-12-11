@@ -61,3 +61,7 @@ func UpdateHolidaysName(id int, holidaysDto dto.UpdateHolidaysRequestDto) error 
 func DeleteHolidays(id int) error {
 	return infrastructure.DeleteHolidays(id)
 }
+
+func UpdateEmployee(employeeStatusDto dto.UpdateEmployeeStatusDto) error {
+    return  infrastructure.UpdateEmployee(employeeStatusDto.UserID)
+}
