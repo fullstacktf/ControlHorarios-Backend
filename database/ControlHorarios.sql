@@ -68,7 +68,7 @@ INSERT INTO `employee` (`employee_id`, `user_id`, `first_name`, `last_name`, `pr
 CREATE TABLE IF NOT EXISTS `employee_records` (
   `record_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `description` varchar(280) DEFAULT NULL,
-  `start_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `start_time` timestamp NULL DEFAULT NULL,
   `end_time` timestamp NULL DEFAULT NULL,
   `employee_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`record_id`),
@@ -152,6 +152,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(50) NOT NULL DEFAULT '',
   `joined_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `rol` enum('company','employee') NOT NULL DEFAULT 'employee',
+  `status` boolean DEFAULT 'TRUE'
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
