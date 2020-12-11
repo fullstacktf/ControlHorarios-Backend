@@ -7,7 +7,7 @@ import (
 )
 
 func CreateCompany(companyDto dto.CreateCompanyRequestDto) (error, int) {
-	user := models.User{Username: companyDto.Username, Password: companyDto.Password, Email: companyDto.Email, Rol: companyDto.Rol}
+	user := models.User{Username: companyDto.Username, Password: companyDto.Password, Email: companyDto.Email, Rol: companyDto.Rol, Status: true}
 	id := infrastructure.CreateUser(user)
 	company := models.Company{UserID: id, CompanyName: companyDto.CompanyName, Location: companyDto.Location}
 	return infrastructure.CreateCompany(company)
@@ -63,5 +63,5 @@ func DeleteHolidays(id int) error {
 }
 
 func UpdateEmployee(employeeStatusDto dto.UpdateEmployeeStatusDto) error {
-    return  infrastructure.UpdateEmployee(employeeStatusDto.UserID)
+	return infrastructure.UpdateEmployee(employeeStatusDto.UserID)
 }

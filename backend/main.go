@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	routes.SetupRouter("0.0.0.0:3306").Run(":8089")
+	routes.SetupRouter("localhost:3306").Run(":8080")
 }
