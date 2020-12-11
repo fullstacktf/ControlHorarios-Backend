@@ -9,6 +9,7 @@ type User struct {
 	Password   string    `gorm:"type:varchar(255); NOT NULL"`
 	JoinedDate time.Time `gorm:"type:date; NOT NULL"`
 	Rol        string    `gorm:"type:varchar(50); NOT NULL"`
+	Status     bool      `gorm:"column:status;type:boolean;"`
 }
 
 func (User) TableName() string {

@@ -9,7 +9,7 @@ import (
 )
 
 func CreateEmployee(employeeDto dto.CreateEmployeeRequestDto, companyID int) error {
-	user := models.User{Username: employeeDto.Username, Password: employeeDto.Password, Email: employeeDto.Email, Rol: employeeDto.Rol, JoinedDate: time.Now()}
+	user := models.User{Username: employeeDto.Username, Password: employeeDto.Password, Email: employeeDto.Email, Rol: employeeDto.Rol, JoinedDate: time.Now(), Status: true}
 	employee := models.Employee{User: user, CompanyID: companyID, FirstName: employeeDto.FirstName, LastName: employeeDto.LastName}
 	return infrastructure.CreateEmployee(employee)
 }
