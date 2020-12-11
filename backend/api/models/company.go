@@ -9,7 +9,7 @@ type Company struct {
 	UserID      int
 	User        User      `gorm:"foreignKey:UserID"`
 	CompanyName string    `gorm:"column:company_name;type:varchar(50);"`
-	CreatedDate time.Time `gorm:"column:created_date;created_date"`
+	CreatedDate time.Time `gorm:"column:created_date;created_date;"`
 	Location    string    `gorm:"column:location;type:varchar(50);"`
 }
 
