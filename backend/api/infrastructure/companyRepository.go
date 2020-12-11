@@ -15,6 +15,6 @@ func CreateCompany(company models.Company) (error, int) {
 
 func GetCompany(id int) models.Company {
 	var company models.Company
-	DB().Debug().First(&company, id)
+	DB().Debug().Joins("User").First(&company, id)
 	return company
 }
