@@ -33,6 +33,6 @@ func GetEmployeesByCompanyID(id int) []models.Employee {
 
 
 func UpdateEmployee(UserID int ) error {
-    result := DB().Debug().Model(&models.User{}).Where("user_id = ?", UserID).Update("password", "Inactive")
+    result := DB().Debug().Model(&models.User{}).Where("user_id = ?", UserID).Update("status", false)
     return result.Error
 }
