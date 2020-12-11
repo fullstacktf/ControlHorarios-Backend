@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
@@ -11,6 +12,7 @@ import (
 func CreateEmployee(employeeDto dto.CreateEmployeeRequestDto, companyID int) error {
 	user := models.User{Username: employeeDto.Username, Password: employeeDto.Password, Email: employeeDto.Email, Rol: employeeDto.Rol}
 	id := infrastructure.CreateUser(user)
+	fmt.Println("---------------------- " + employeeDto.LastName)
 	employee := models.Employee{UserID: id, CompanyID: companyID, FirstName: employeeDto.FirstName, LastName: employeeDto.LastName}
 	return infrastructure.CreateEmployee(employee)
 }

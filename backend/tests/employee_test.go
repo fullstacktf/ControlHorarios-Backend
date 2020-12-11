@@ -19,11 +19,11 @@ func TestCreateEmployeeShouldReturn200(t *testing.T) {
 			   "Email": "ana@ana.ana",
 			   "Password": "123Ana",
 			   "Rol": "Employee",
-			   "firstName": "ana",
-			   "lastName": "ana"
+			   "FirstName": "ana",
+			   "LastName": "ana"
 	   }`).
 		Expect(t).
-		Status(http.StatusCreated).
+		Status(http.StatusOK).
 		End()
 }
 

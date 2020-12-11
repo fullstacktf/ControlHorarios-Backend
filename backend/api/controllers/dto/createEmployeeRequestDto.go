@@ -6,5 +6,5 @@ type CreateEmployeeRequestDto struct {
 	Password  string `json:"Password"`
 	Rol       string `json:"Rol"`
 	FirstName string `json:"FirstName"`
-	LastName  string `json:"LastName "`
+	LastName  string `json:"LastName"`
 }
