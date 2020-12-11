@@ -53,7 +53,6 @@ func SetupRouter(host string) *gin.Engine {
 		companies.PUT("/:id/employees", controllers.UpdateEmployee)
 
 		companies.DELETE("/:id/holidays", controllers.DeleteHolidays)
-
 	}
 	return r
 }
