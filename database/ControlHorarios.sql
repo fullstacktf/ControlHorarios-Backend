@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(50) NOT NULL DEFAULT '',
   `joined_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `rol` enum('company','employee') NOT NULL DEFAULT 'employee',
-  `status` boolean DEFAULT 'TRUE'
+  `status` boolean DEFAULT TRUE,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
