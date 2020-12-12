@@ -51,18 +51,18 @@ func DeleteUser(c *gin.Context) {
 }
 
 func UserLogin(c *gin.Context) {
-	var employeeLoginDto dto.UserLoginDto
-	c.BindJSON(&employeeLoginDto)
-	if employeeLoginDto.Email == "" || employeeLoginDto.Password == "" {
+	var userLoginDto dto.UserLoginDto
+	c.BindJSON(&userLoginDto)
+	if userLoginDto.Email == "" || userLoginDto.Password == "" {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
 		log.Println("Error al bindear datos")
 	}
 
-	userLoginDto := domain.UserLogin(employeeLoginDto)
-	if userLoginDto.UserID != 0 {
-		c.JSON(http.StatusOK, gin.H{"UserID": userLoginDto.UserID, "SecondaryID": userLoginDto.SecondaryID, "Rol": userLoginDto.Rol})
+	canLogin, userResponseLoginDto := domain.UserLogin(userLoginDto)
+	if !canLogin {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "User is inactive or Password wrong"})
 	} else {
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "Email or Password wrong"})
+		c.JSON(http.StatusOK, gin.H{"UserID": userResponseLoginDto.UserID, "SecondaryID": userResponseLoginDto.SecondaryID, "Rol": userResponseLoginDto.Rol})
 	}
 }
 
