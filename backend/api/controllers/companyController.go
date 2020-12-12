@@ -199,23 +199,21 @@ func DeleteHolidays(c *gin.Context) {
 	}
 }
 
+func UpdateEmployeeStatus(c *gin.Context) {
+	var employeeStatusDto dto.UpdateEmployeeStatusDto
+	c.BindJSON(&employeeStatusDto)
 
-func UpdateEmployee(c *gin.Context) {
+	if employeeStatusDto.UserID == 0 {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
+		log.Println("Error al bindear datos")
+	}
 
-    var employeeStatusDto dto.UpdateEmployeeStatusDto
-    c.BindJSON(&employeeStatusDto)
+	err := domain.UpdateEmployeeStatus(employeeStatusDto)
 
-    if employeeStatusDto.UserID == 0 {
-        c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Bad Data"})
-        log.Println("Error al bindear datos")
-    }
-
-    err := domain.UpdateEmployee(employeeStatusDto)
-
-    if err != nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"message": "Error updating Employee status"})
-    } else {
-        c.JSON(http.StatusOK, gin.H{"message": "Setting Employee status successfully"})
-    }
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error updating Employee status"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"message": "Setting Employee status successfully"})
+	}
 
 }

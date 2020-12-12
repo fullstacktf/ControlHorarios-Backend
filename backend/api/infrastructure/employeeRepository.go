@@ -31,8 +31,7 @@ func GetEmployeesByCompanyID(id int) []models.Employee {
 	return employees
 }
 
-
-func UpdateEmployee(UserID int ) error {
-    result := DB().Debug().Model(&models.User{}).Where("user_id = ?", UserID).Update("status", false)
-    return result.Error
+func UpdateEmployee(id int, status bool) error {
+	result := DB().Debug().Model(&models.User{}).Where("user_id = ?", id).Update("status", status)
+	return result.Error
 }
