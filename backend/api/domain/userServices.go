@@ -19,16 +19,20 @@ func DeleteUser(id int) error {
 	return result.Error
 }
 
-func UserLogin(userLoginDto dto.UserLoginDto) dto.LoginResponseDto {
+func UserLogin(userLoginDto dto.UserLoginDto) (bool, dto.LoginResponseDto) {
 	user := infrastructure.GetUser(userLoginDto.Email, userLoginDto.Password)
 	var id int
+	var canLogin = user.Status
+	if !canLogin {
+		return canLogin, dto.LoginResponseDto{UserID: user.UserID}
+	}
 	if user.Rol == "employee" {
 		id = infrastructure.GetEmployeeId(user.UserID)
 	}
 	if user.Rol == "company" {
 		id = infrastructure.GetCompanyId(user.UserID)
 	}
-	return dto.LoginResponseDto{UserID: user.UserID, SecondaryID: id, Rol: user.Rol}
+	return true, dto.LoginResponseDto{UserID: user.UserID, SecondaryID: id, Rol: user.Rol}
 }
 
 func UpdateUserPassword(userDto dto.UpdateEmployeePasswordDto, userID int) error {

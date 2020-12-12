@@ -14,7 +14,7 @@ func TestUserLoginShouldReturn200(t *testing.T) {
 		Post("/api/user/login").
 		Body(`{
 			"Email": "johndoe@gmail.com",
-			"Password": "foo"
+			"Password": "test"
 		}`).
 		Expect(t).
 		Body(`{
