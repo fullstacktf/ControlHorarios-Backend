@@ -160,12 +160,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Volcando datos para la tabla controlhorarios.users: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `joined_date`, `rol`) VALUES
-	(4, 'Airan', 'airan@gmail.com', '12345', '2020-11-13 11:49:16', 'employee'),
-	(5, 'Ariane', 'ariane@gmail.com', '12345', '2020-11-13 12:37:08', 'company'),
-	(6, 'Jaime', 'jaime@gmail.com', '12345', '2020-11-13 12:40:49', 'employee'),
-	(7, 'Manuel', 'Manuel@gmail.com', '12345', '2020-11-13 12:42:30', 'company'),
-	(8, 'Riote', 'riot@gmail.com', '12345', '2020-11-16 13:20:26', 'company'),
-	(9, 'Yodra', 'yodra@gmail.com', '12345', '2020-11-16 13:29:23', 'employee');
+	(4, 'Airan', 'airan@gmail.com', '12345abc', '2020-11-13 11:49:16', 'employee'),
+	(5, 'Ariane', 'ariane@gmail.com', '12345abc', '2020-11-13 12:37:08', 'company'),
+	(6, 'Jaime', 'jaime@gmail.com', '12345abc', '2020-11-13 12:40:49', 'employee'),
+	(7, 'Manuel', 'Manuel@gmail.com', '12345abc', '2020-11-13 12:42:30', 'company'),
+	(8, 'Riote', 'riot@gmail.com', '12345abc', '2020-11-16 13:20:26', 'company'),
+	(9, 'Yodra', 'yodra@gmail.com', '12345abc', '2020-11-16 13:29:23', 'employee');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

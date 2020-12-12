@@ -161,3 +161,14 @@ func TestCreateHolidayShouldReturn201(t *testing.T) {
 		Status(http.StatusCreated).
 		End()
 }
+
+func TestUpdateEmployeeStatusShouldReturn200(t *testing.T) {
+	apitest.New().
+		Handler(routes.SetupRouter("127.0.0.1:3306")).
+		Put("/api/companies/1/employees").
+		Body(`{"UserID": 1,
+				"Status": false}`).
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+}
