@@ -12,7 +12,10 @@ func GetEmployeeId(id int) int {
 
 func GetEmployee(id int) models.Employee {
 	var employee models.Employee
-	DB().Debug().Where("employee_id = ?", id).First(&employee)
+	DB().Debug().
+		Joins("User").
+		Joins("Company").
+		Where("employee_id = ?", id).First(&employee)
 	return employee
 }
 
