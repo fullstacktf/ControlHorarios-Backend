@@ -6,13 +6,12 @@ import (
 
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
-	"github.com/fullstacktf/ControlHorarios-Backend/api/routes"
 	"github.com/steinfletcher/apitest"
 )
 
 func TestCreateEmployeeShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter("127.0.0.1:3306")).
+		Handler(TestHandler()).
 		Post("/api/employee/4").
 		Body(`{
 			   "Username": "Ana",
@@ -34,7 +33,7 @@ func TestGetEmployeeShouldReturn200(t *testing.T) {
 	infrastructure.DB().Create(&employee)
 
 	apitest.New().
-		Handler(routes.SetupRouter("127.0.0.1:3306")).
+		Handler(TestHandler()).
 		Get("/api/employee/666").
 		Expect(t).
 		Status(http.StatusOK).
@@ -47,7 +46,7 @@ func TestGetEmployeeShouldReturn200(t *testing.T) {
 
 func TestGetSummaryShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter("127.0.0.1:3306")).
+		Handler(TestHandler()).
 		Get("/api/employee/3/summary").
 		Expect(t).
 		Status(http.StatusOK).
@@ -56,7 +55,7 @@ func TestGetSummaryShouldReturn200(t *testing.T) {
 
 func TestDoCheckInShouldReturn201(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter("127.0.0.1:3306")).
+		Handler(TestHandler()).
 		Post("/api/employee/2/checkin").
 		Body(`{
 			"description":"Test del checkin"
@@ -68,7 +67,7 @@ func TestDoCheckInShouldReturn201(t *testing.T) {
 
 func TestDoCheckOutShouldReturn200(t *testing.T) {
 	apitest.New().
-		Handler(routes.SetupRouter("127.0.0.1:3306")).
+		Handler(TestHandler()).
 		Put("/api/employee/2/checkout/71").
 		Expect(t).
 		Status(http.StatusOK).
