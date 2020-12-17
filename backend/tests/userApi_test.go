@@ -4,31 +4,33 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fullstacktf/ControlHorarios-Backend/api/routes"
 	"github.com/steinfletcher/apitest"
 )
 
 func TestUserLoginShouldReturn200(t *testing.T) {
+	CreateTestUser("employee")
 	apitest.New().
-		Handler(routes.SetupRouter("127.0.0.1:3306")).
+		Handler(TestHandler()).
 		Post("/api/user/login").
 		Body(`{
 			"Email": "johndoe@gmail.com",
-			"Password": "test"
+			"Password": "foo"
 		}`).
 		Expect(t).
 		Body(`{
 			"Rol": "employee",
-			"SecondaryID": 2,
+			"SecondaryID": 0,
 			"UserID": 1
 		}`).
 		Status(http.StatusOK).
 		End()
+	ClearTestDatabase()
 }
 
 func TestUpdateUserPasswordShouldReturn200(t *testing.T) {
+	CreateTestUser("employee")
 	apitest.New().
-		Handler(routes.SetupRouter("127.0.0.1:3306")).
+		Handler(TestHandler()).
 		Put("/api/employee/1/password").
 		Body(`{
 			"password":"test"
@@ -36,4 +38,5 @@ func TestUpdateUserPasswordShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+	ClearTestDatabase()
 }

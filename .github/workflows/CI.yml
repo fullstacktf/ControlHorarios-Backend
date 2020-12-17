@@ -5,9 +5,22 @@ jobs:
   build-app:
     runs-on: ubuntu-latest
 
+    services:
+      mariadb:
+        image: mariadb:10.5.6 
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
+
+      - name: execute sql script
+        run: |
+          mysql -P 3306 --protocol=tcp -u root -proot < ./database/ControlHorarios.sql
 
       - name: setup go
         uses: actions/setup-go@v2
@@ -15,4 +28,4 @@ jobs:
           go-version: "1.15.3"
 
       - name: Run build
-        run: cd backend/ && go build main.go
+        run: cd backend/ && go test -v ./...
