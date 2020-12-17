@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: execute sql script
-        run: docker exec -it mariadb mysql -u root -proot < database/ControlHorarios.sql
+        run: docker ps
 
       - name: setup go
         uses: actions/setup-go@v2
