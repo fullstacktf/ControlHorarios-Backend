@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: execute sql script
-        run: ps -fea | grep mysqld
+        run: mysqladmin -u root -proot status
 
       - name: setup go
         uses: actions/setup-go@v2
