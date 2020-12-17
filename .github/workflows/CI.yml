@@ -21,8 +21,13 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: execute sql script
-        run: mysql -u root -proot < database/ControlHorarios.sql
+      - name: Verify MariaDB connection
+        env:
+          PORT: ${{ job.services.mariadb.ports[3306] }}
+        run: |
+          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
+            sleep 1
+          done
 
       - name: setup go
         uses: actions/setup-go@v2
