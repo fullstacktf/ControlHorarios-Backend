@@ -9,7 +9,6 @@ import (
 
 func TestUserLoginShouldReturn200(t *testing.T) {
 	CreateTestUser("employee")
-
 	apitest.New().
 		Handler(TestHandler()).
 		Post("/api/user/login").
@@ -25,13 +24,11 @@ func TestUserLoginShouldReturn200(t *testing.T) {
 		}`).
 		Status(http.StatusOK).
 		End()
-
 	ClearTestDatabase()
 }
 
 func TestUpdateUserPasswordShouldReturn200(t *testing.T) {
 	CreateTestUser("employee")
-
 	apitest.New().
 		Handler(TestHandler()).
 		Put("/api/employee/1/password").
@@ -41,6 +38,5 @@ func TestUpdateUserPasswordShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
-
 	ClearTestDatabase()
 }

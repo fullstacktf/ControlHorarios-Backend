@@ -1,6 +1,8 @@
 package tests
 
 import (
+	"time"
+
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/routes"
@@ -58,4 +60,11 @@ func CreateTestProject() {
 	CreateTestCompany()
 	project := models.Projects{ProjectID: 1, ProjectName: "League of Legends", CompanyID: 1}
 	infrastructure.DB().Create(&project)
+}
+
+func CreateTestRecords() {
+	CreateTestEmployee()
+
+	record := models.EmployeeRecord{RecordID: 1, Description: "Test", StartTime: time.Now(), EndTime: time.Now(), EmployeeID: 1}
+	infrastructure.DB().Create(&record)
 }

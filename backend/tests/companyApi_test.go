@@ -10,7 +10,6 @@ import (
 
 func TestCreateProjectShouldReturn200(t *testing.T) {
 	CreateTestCompany()
-
 	apitest.New().
 		Handler(TestHandler()).
 		Post("/api/companies/1/projects").
@@ -18,7 +17,6 @@ func TestCreateProjectShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
-
 	ClearTestDatabase()
 }
 
@@ -30,7 +28,6 @@ func TestGetHolidaysShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
-
 	ClearTestDatabase()
 }
 
@@ -74,7 +71,6 @@ func TestUpdateProjectNameShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
-
 	ClearTestDatabase()
 }
 
@@ -87,7 +83,6 @@ func TestUpdateSectionNameShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
-
 	ClearTestDatabase()
 }
 
@@ -101,7 +96,6 @@ func TestUpdateHolidayNameShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
-
 	ClearTestDatabase()
 }
 
@@ -113,6 +107,7 @@ func TestDeleteHolidayShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+	ClearTestDatabase()
 }
 
 func TestGetCompanyByIdShouldReturn200(t *testing.T) {
@@ -167,7 +162,6 @@ func TestCreateHolidayShouldReturn201(t *testing.T) {
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
-
 	ClearTestDatabase()
 }
 
@@ -181,6 +175,5 @@ func TestUpdateEmployeeStatusShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
-
 	ClearTestDatabase()
 }

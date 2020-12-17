@@ -4,15 +4,14 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
-	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/steinfletcher/apitest"
 )
 
-func TestCreateEmployeeShouldReturn200(t *testing.T) {
+func TestCreateEmployeeShouldReturn201(t *testing.T) {
+	CreateTestCompany()
 	apitest.New().
 		Handler(TestHandler()).
-		Post("/api/employee/4").
+		Post("/api/employee/1").
 		Body(`{
 			   "Username": "Ana",
 			   "Email": "ana@ana.ana",
@@ -24,52 +23,53 @@ func TestCreateEmployeeShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
+	ClearTestDatabase()
 }
 
 func TestGetEmployeeShouldReturn200(t *testing.T) {
-	user := models.User{UserID: 666, Email: "johndoe@gmail.com", Password: "foo", Rol: "employee"}
-	infrastructure.DB().Create(&user)
-	employee := models.Employee{EmployeeID: 666, UserID: 666, CompanyID: 2}
-	infrastructure.DB().Create(&employee)
-
+	CreateTestEmployee()
 	apitest.New().
 		Handler(TestHandler()).
-		Get("/api/employee/666").
+		Get("/api/employee/1").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
-
-	infrastructure.DB().Where("employee_id = ?", 666).Delete(models.Employee{})
-	infrastructure.DB().Where("user_id = ?", 666).Delete(models.User{})
-
+	ClearTestDatabase()
 }
 
 func TestGetSummaryShouldReturn200(t *testing.T) {
+	CreateTestRecords()
 	apitest.New().
 		Handler(TestHandler()).
-		Get("/api/employee/3/summary").
+		Get("/api/employee/1/summary").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+	ClearTestDatabase()
 }
 
 func TestDoCheckInShouldReturn201(t *testing.T) {
+	CreateTestEmployee()
 	apitest.New().
 		Handler(TestHandler()).
-		Post("/api/employee/2/checkin").
+		Post("/api/employee/1/checkin").
 		Body(`{
 			"description":"Test del checkin"
 	   }`).
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
+	ClearTestDatabase()
 }
 
 func TestDoCheckOutShouldReturn200(t *testing.T) {
+	CreateTestRecords()
 	apitest.New().
 		Handler(TestHandler()).
-		Put("/api/employee/2/checkout/71").
+		Put("/api/employee/1/checkout/1").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+
+	ClearTestDatabase()
 }
