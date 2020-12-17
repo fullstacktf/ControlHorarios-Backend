@@ -5,29 +5,15 @@ jobs:
   build-app:
     runs-on: ubuntu-latest
 
-    services:
-      mariadb:
-        image: mariadb:10.5.6 
-        ports:
-          - "3306:3306"
-        env:
-          MYSQL_USER: user
-          MYSQL_PASSWORD: user
-          MYSQL_DATABASE: test
-          MYSQL_ROOT_PASSWORD: root
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
-
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
 
-      - name: Verify MariaDB connection
-        env:
-          PORT: ${{ job.services.mariadb.ports[3306] }}
-        run: |
-          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
-            sleep 1
-          done
+      - name: install mariadb
+        run: apt update && apt install mariadb-server  
+
+      - name: execute sql script
+        run: mysql -u root -proot < database/ControlHorarios.sql
 
       - name: setup go
         uses: actions/setup-go@v2
