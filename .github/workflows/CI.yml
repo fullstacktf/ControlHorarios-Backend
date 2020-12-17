@@ -8,8 +8,9 @@ jobs:
     services:
       mariadb:
         image: mariadb:10.5.6 
+        container_name: "db"
         ports:
-          - 3306
+          - "3306:3306"
         env:
           MYSQL_USER: user
           MYSQL_PASSWORD: user
@@ -22,7 +23,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: execute sql script
-        run: docker ps
+        run: docker exec -it db mysql -u root -proot < database/ControlHorarios.sql
 
       - name: setup go
         uses: actions/setup-go@v2
