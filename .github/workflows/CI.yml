@@ -20,7 +20,7 @@ jobs:
 
       - name: execute sql script
         run: |
-          mysql -Tv -h mysql -P 3306 --protocol=tcp -u root -proot < ./database/ControlHorarios.sql
+          mysql -v -h mysql -P 3306 --protocol=tcp -u root -proot < ./database/ControlHorarios.sql
 
       - name: setup go
         uses: actions/setup-go@v2
