@@ -1,8 +1,6 @@
 package domain
 
 import (
-	"fmt"
-
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
@@ -25,8 +23,6 @@ func UserLogin(userLoginDto dto.UserLoginDto) (bool, dto.LoginResponseDto) {
 	user := infrastructure.GetUser(userLoginDto.Email, userLoginDto.Password)
 	var id int
 	var canLogin = user.Status
-	fmt.Println("-------------------------------")
-	fmt.Println(canLogin)
 	if !canLogin {
 		return canLogin, dto.LoginResponseDto{UserID: user.UserID}
 	}
