@@ -43,12 +43,14 @@ func TestGetEmployeesShouldReturn200(t *testing.T) {
 }
 
 func TestGetProjectsShouldReturn200(t *testing.T) {
+	CreateTestProject()
 	apitest.New().
 		Handler(TestHandler()).
 		Get("/api/companies/1/projects").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+	ClearTestDatabase()
 }
 
 func TestGetSectionsShouldReturn200(t *testing.T) {

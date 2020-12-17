@@ -46,7 +46,7 @@ func CreateTestCompany() {
 
 func CreateTestHolidays() {
 	CreateTestCompany()
-	holidays := models.Holidays{HolidayID: 1, HolidayTitle: "Navidad", HolidayDate: "2020-12-12"}
+	holidays := models.Holidays{HolidayID: 1, HolidayTitle: "Navidad", HolidayDate: "2020-12-12", CompanyID: 1}
 	infrastructure.DB().Debug().Create(&holidays)
 }
 
