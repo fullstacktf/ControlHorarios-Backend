@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: install mariadb
-        run: apt update && apt install mariadb-server  
+        run: apt update && apt-get install mariadb-server  
 
       - name: execute sql script
         run: mysql -u root -proot < database/ControlHorarios.sql
