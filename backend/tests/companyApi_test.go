@@ -4,13 +4,13 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
-	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/routes"
 	"github.com/steinfletcher/apitest"
 )
 
 func TestCreateProjectShouldReturn200(t *testing.T) {
+	CreateTestCompany()
+
 	apitest.New().
 		Handler(TestHandler()).
 		Post("/api/companies/1/projects").
@@ -18,24 +18,31 @@ func TestCreateProjectShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+
+	ClearTestDatabase()
 }
 
 func TestGetHolidaysShouldReturn200(t *testing.T) {
+	CreateTestHolidays()
 	apitest.New().
 		Handler(TestHandler()).
 		Get("/api/companies/1/holidays").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+
+	ClearTestDatabase()
 }
 
 func TestGetEmployeesShouldReturn200(t *testing.T) {
+	CreateTestEmployee()
 	apitest.New().
 		Handler(TestHandler()).
 		Get("/api/companies/1/employees").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+	ClearTestDatabase()
 }
 
 func TestGetProjectsShouldReturn200(t *testing.T) {
@@ -48,18 +55,18 @@ func TestGetProjectsShouldReturn200(t *testing.T) {
 }
 
 func TestGetSectionsShouldReturn200(t *testing.T) {
+	CreateTestSection()
 	apitest.New().
 		Handler(TestHandler()).
 		Get("/api/companies/1/sections").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+	ClearTestDatabase()
 }
 
 func TestUpdateProjectNameShouldReturn200(t *testing.T) {
-	project := models.Projects{ProjectID: 1, ProjectName: "League of Legends", CompanyID: 2}
-	infrastructure.DB().Create(&project)
-
+	CreateTestProject()
 	apitest.New().
 		Handler(TestHandler()).
 		Put("/api/companies/1/projects").
@@ -68,59 +75,55 @@ func TestUpdateProjectNameShouldReturn200(t *testing.T) {
 		Status(http.StatusOK).
 		End()
 
-	infrastructure.DB().Where("project_id = ?", 1).Delete(models.Projects{})
+	ClearTestDatabase()
 }
 
 func TestUpdateSectionNameShouldReturn200(t *testing.T) {
-	project := models.Sections{SectionID: 666, SectionName: "Programming", CompanyID: 2}
-	infrastructure.DB().Create(&project)
-
+	CreateTestSection()
 	apitest.New().
 		Handler(TestHandler()).
-		Put("/api/companies/666/sections").
+		Put("/api/companies/1/sections").
 		Body(`{"SectionName": "Management"}`).
 		Expect(t).
 		Status(http.StatusOK).
 		End()
 
-	infrastructure.DB().Where("section_id = ?", 666).Delete(models.Sections{})
+	ClearTestDatabase()
 }
 
 func TestUpdateHolidayNameShouldReturn200(t *testing.T) {
-	holidays := models.Holidays{HolidayID: 666, HolidayTitle: "Navidad", HolidayDate: "2022-10-12", CompanyID: 2}
-	infrastructure.DB().Create(&holidays)
-
+	CreateTestHolidays()
 	apitest.New().
 		Handler(TestHandler()).
-		Put("/api/companies/666/holidays").
+		Put("/api/companies/1/holidays").
 		Body(`{"HolidaysName": "Carnaval",
 			  "NewDate": "2023-10-12"}`).
 		Expect(t).
 		Status(http.StatusOK).
 		End()
 
-	infrastructure.DB().Where("holiday_id = ?", 666).Delete(models.Holidays{})
+	ClearTestDatabase()
 }
 
 func TestDeleteHolidayShouldReturn200(t *testing.T) {
-	holidays := models.Holidays{HolidayID: 666, HolidayTitle: "Navidad", HolidayDate: "2022-10-12", CompanyID: 2}
-	infrastructure.DB().Create(&holidays)
-
+	CreateTestHolidays()
 	apitest.New().
 		Handler(routes.SetupRouter("127.0.0.1:3306")).
-		Delete("/api/companies/666/holidays").
+		Delete("/api/companies/1/holidays").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
 }
 
 func TestGetCompanyByIdShouldReturn200(t *testing.T) {
+	CreateTestCompany()
 	apitest.New().
 		Handler(TestHandler()).
 		Get("/api/companies/1").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+	ClearTestDatabase()
 }
 
 func TestCreateCompanyShouldReturn200(t *testing.T) {
@@ -138,9 +141,11 @@ func TestCreateCompanyShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
+	ClearTestDatabase()
 }
 
-func TestCreateSectionShouldReturn200(t *testing.T) {
+func TestCreateSectionShouldReturn201(t *testing.T) {
+	CreateTestCompany()
 	apitest.New().
 		Handler(TestHandler()).
 		Post("/api/companies/1/sections").
@@ -148,9 +153,11 @@ func TestCreateSectionShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
+	ClearTestDatabase()
 }
 
 func TestCreateHolidayShouldReturn201(t *testing.T) {
+	CreateTestCompany()
 	apitest.New().
 		Handler(TestHandler()).
 		Post("/api/companies/1/holidays").
@@ -160,9 +167,12 @@ func TestCreateHolidayShouldReturn201(t *testing.T) {
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
+
+	ClearTestDatabase()
 }
 
 func TestUpdateEmployeeStatusShouldReturn200(t *testing.T) {
+	CreateTestEmployee()
 	apitest.New().
 		Handler(TestHandler()).
 		Put("/api/companies/1/employees").
@@ -171,4 +181,6 @@ func TestUpdateEmployeeStatusShouldReturn200(t *testing.T) {
 		Expect(t).
 		Status(http.StatusOK).
 		End()
+
+	ClearTestDatabase()
 }

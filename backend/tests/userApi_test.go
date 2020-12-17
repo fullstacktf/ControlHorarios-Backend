@@ -8,7 +8,7 @@ import (
 )
 
 func TestUserLoginShouldReturn200(t *testing.T) {
-	CreateTestUser()
+	CreateTestUser("employee")
 
 	apitest.New().
 		Handler(TestHandler()).
@@ -30,7 +30,7 @@ func TestUserLoginShouldReturn200(t *testing.T) {
 }
 
 func TestUpdateUserPasswordShouldReturn200(t *testing.T) {
-	CreateTestUser()
+	CreateTestUser("employee")
 
 	apitest.New().
 		Handler(TestHandler()).
