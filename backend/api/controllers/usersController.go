@@ -39,17 +39,6 @@ func UpdateUser(c *gin.Context) {
 	}
 }
 
-func DeleteUser(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("id"))
-
-	dbErr := domain.DeleteUser(id)
-	if dbErr != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error deleting user"})
-	} else {
-		c.JSON(http.StatusOK, gin.H{"message": "User deleted successfully"})
-	}
-}
-
 func UserLogin(c *gin.Context) {
 	var userLoginDto dto.UserLoginDto
 	c.BindJSON(&userLoginDto)
@@ -58,9 +47,9 @@ func UserLogin(c *gin.Context) {
 		log.Println("Error al bindear datos")
 	}
 
-	canLogin, userResponseLoginDto := domain.UserLogin(userLoginDto)
-	if !canLogin {
-		c.JSON(http.StatusUnauthorized, gin.H{"message": "User is inactive or Password wrong"})
+	err, userResponseLoginDto := domain.UserLogin(userLoginDto)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 	} else {
 		c.JSON(http.StatusOK, gin.H{"UserID": userResponseLoginDto.UserID, "SecondaryID": userResponseLoginDto.SecondaryID, "Rol": userResponseLoginDto.Rol})
 	}

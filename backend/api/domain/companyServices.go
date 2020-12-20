@@ -8,13 +8,16 @@ import (
 
 func CreateCompany(companyDto dto.CreateCompanyRequestDto) (error, int) {
 	user := models.User{Username: companyDto.Username, Password: companyDto.Password, Email: companyDto.Email, Rol: companyDto.Rol, Status: true}
-	id := infrastructure.CreateUser(user)
+	err, id := userRepository.CreateUser(user)
+	if err != nil {
+		return err, 0
+	}
 	company := models.Company{UserID: id, CompanyName: companyDto.CompanyName, Location: companyDto.Location}
-	return infrastructure.CreateCompany(company)
+	return companyRepository.CreateCompany(company)
 }
 
 func GetCompany(id int) models.Company {
-	return infrastructure.GetCompany(id)
+	return companyRepository.GetCompany(id)
 }
 
 func CreateProject(id int, projectDto dto.ProjectDto) error {
@@ -35,7 +38,7 @@ func GetHolidays(id int) []models.Holidays {
 }
 
 func GetEmployees(id int) []models.Employee {
-	return infrastructure.GetEmployeesByCompanyID(id)
+	return employeeRepository.GetEmployeesByCompanyID(id)
 }
 
 func GetProjects(id int) []models.Projects {
@@ -63,5 +66,5 @@ func DeleteHolidays(id int) error {
 }
 
 func UpdateEmployeeStatus(employeeStatusDto dto.UpdateEmployeeStatusDto) error {
-	return infrastructure.UpdateEmployee(employeeStatusDto.UserID, employeeStatusDto.Status)
+	return employeeRepository.UpdateEmployee(employeeStatusDto.UserID, employeeStatusDto.Status)
 }

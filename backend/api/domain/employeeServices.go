@@ -11,7 +11,7 @@ import (
 func CreateEmployee(employeeDto dto.CreateEmployeeRequestDto, companyID int) error {
 	user := models.User{Username: employeeDto.Username, Password: employeeDto.Password, Email: employeeDto.Email, Rol: employeeDto.Rol, JoinedDate: time.Now(), Status: true}
 	employee := models.Employee{User: user, CompanyID: companyID, FirstName: employeeDto.FirstName, LastName: employeeDto.LastName}
-	return infrastructure.CreateEmployee(employee)
+	return employeeRepository.CreateEmployee(employee)
 }
 
 func CheckIn(checkInDto dto.CheckInRequestDto, employeeID int) (error, int) {
@@ -28,5 +28,5 @@ func GetSummary(employeeID int) []models.EmployeeRecord {
 }
 
 func GetEmployee(id int) models.Employee {
-	return infrastructure.GetEmployee(id)
+	return employeeRepository.GetEmployee(id)
 }

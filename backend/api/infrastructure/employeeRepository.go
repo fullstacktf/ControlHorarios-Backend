@@ -4,13 +4,23 @@ import (
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 )
 
-func GetEmployeeId(id int) int {
-	var employee models.Employee
-	DB().Debug().Where("user_id = ?", id).First(&employee)
-	return employee.EmployeeID
+type EmployeeRepositoryInterface interface {
+	GetEmployeeId(id int) (error, int)
+	GetEmployee(id int) models.Employee
+	CreateEmployee(employee models.Employee) error
+	GetEmployeesByCompanyID(id int) []models.Employee
+	UpdateEmployee(id int, status bool) error
 }
 
-func GetEmployee(id int) models.Employee {
+type EmployeeRepository struct{}
+
+func (e EmployeeRepository) GetEmployeeId(id int) (error, int) {
+	var employee models.Employee
+	result := DB().Debug().Where("user_id = ?", id).First(&employee)
+	return result.Error, employee.EmployeeID
+}
+
+func (e EmployeeRepository) GetEmployee(id int) models.Employee {
 	var employee models.Employee
 	DB().Debug().
 		Joins("User").
@@ -19,12 +29,12 @@ func GetEmployee(id int) models.Employee {
 	return employee
 }
 
-func CreateEmployee(employee models.Employee) error {
+func (e EmployeeRepository) CreateEmployee(employee models.Employee) error {
 	result := DB().Debug().Create(&employee)
 	return result.Error
 }
 
-func GetEmployeesByCompanyID(id int) []models.Employee {
+func (e EmployeeRepository) GetEmployeesByCompanyID(id int) []models.Employee {
 	var employees []models.Employee
 	DB().Debug().
 		Joins("User").
@@ -34,7 +44,7 @@ func GetEmployeesByCompanyID(id int) []models.Employee {
 	return employees
 }
 
-func UpdateEmployee(id int, status bool) error {
+func (e EmployeeRepository) UpdateEmployee(id int, status bool) error {
 	result := DB().Debug().Model(&models.User{}).Where("user_id = ?", id).Update("status", status)
 	return result.Error
 }

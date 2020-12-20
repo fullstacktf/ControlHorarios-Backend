@@ -1,40 +1,51 @@
 package domain
 
 import (
+	"errors"
+
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers/dto"
-	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/models"
 )
 
 func GetAllUsers() []models.User {
-	return infrastructure.GetAllUsers()
+	return userRepository.GetAllUsers()
 }
 
 func UpdateUser(id int, name string) error {
-	return infrastructure.UpdateUserName(id, name)
+	return userRepository.UpdateUserName(id, name)
 }
 
-func DeleteUser(id int) error {
-	result := infrastructure.DB().Debug().Delete(&models.User{}, id)
-	return result.Error
-}
+func UserLogin(userLoginDto dto.UserLoginDto) (error, dto.LoginResponseDto) {
+	uerr, user := userRepository.GetUser(userLoginDto.Email, userLoginDto.Password)
 
-func UserLogin(userLoginDto dto.UserLoginDto) (bool, dto.LoginResponseDto) {
-	user := infrastructure.GetUser(userLoginDto.Email, userLoginDto.Password)
+	if uerr != nil {
+		return uerr, dto.LoginResponseDto{}
+	}
+	if user.UserID == 0 {
+		return errors.New("User not found in database"), dto.LoginResponseDto{}
+	}
+
 	var id int
 	var canLogin = user.Status
+	var err error
 	if !canLogin {
-		return canLogin, dto.LoginResponseDto{UserID: user.UserID}
+		return errors.New("User can't log in because inactive state"), dto.LoginResponseDto{UserID: user.UserID}
 	}
 	if user.Rol == "employee" {
-		id = infrastructure.GetEmployeeId(user.UserID)
+		err, id = employeeRepository.GetEmployeeId(user.UserID)
+		if err != nil {
+			return err, dto.LoginResponseDto{}
+		}
 	}
 	if user.Rol == "company" {
-		id = infrastructure.GetCompanyId(user.UserID)
+		err, id = companyRepository.GetCompanyId(user.UserID)
+		if err != nil {
+			return err, dto.LoginResponseDto{}
+		}
 	}
-	return true, dto.LoginResponseDto{UserID: user.UserID, SecondaryID: id, Rol: user.Rol}
+	return err, dto.LoginResponseDto{UserID: user.UserID, SecondaryID: id, Rol: user.Rol}
 }
 
 func UpdateUserPassword(userDto dto.UpdateEmployeePasswordDto, userID int) error {
-	return infrastructure.UpdatePassword(userDto.Password, userID)
+	return userRepository.UpdatePassword(userDto.Password, userID)
 }

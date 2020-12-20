@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/fullstacktf/ControlHorarios-Backend/api/controllers"
+	"github.com/fullstacktf/ControlHorarios-Backend/api/domain"
 	"github.com/fullstacktf/ControlHorarios-Backend/api/infrastructure"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,8 @@ func SetupRouter(host string) *gin.Engine {
 		AllowHeaders: []string{"*"},
 		MaxAge:       12 * time.Hour,
 	}))
+
+	domain.SetRepositories(infrastructure.UserRepository{}, infrastructure.EmployeeRepository{}, infrastructure.CompanyRepository{})
 
 	user := r.Group("/api/user")
 	{

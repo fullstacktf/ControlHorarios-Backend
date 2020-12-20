@@ -21,9 +21,9 @@ func CreateCompany(c *gin.Context) {
 	DBError, companyID := domain.CreateCompany(companyDto)
 
 	if DBError != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": "Error saving company"})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"message": DBError.Error()})
 	} else {
-		c.AbortWithStatusJSON(http.StatusCreated,
+		c.JSON(http.StatusCreated,
 			gin.H{"message": "Company created successfully",
 				"CompanyID": companyID,
 			})

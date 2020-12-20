@@ -8,19 +8,19 @@ import (
 )
 
 func TestUserLoginShouldReturn200(t *testing.T) {
-	CreateTestUser("employee")
+	CreateTestEmployee()
 	apitest.New().
 		Handler(TestHandler()).
 		Post("/api/user/login").
 		Body(`{
-			"Email": "johndoe@gmail.com",
+			"Email": "juliadoe@gmail.com",
 			"Password": "foo"
 		}`).
 		Expect(t).
 		Body(`{
 			"Rol": "employee",
-			"SecondaryID": 0,
-			"UserID": 1
+			"SecondaryID": 1,
+			"UserID": 2
 		}`).
 		Status(http.StatusOK).
 		End()

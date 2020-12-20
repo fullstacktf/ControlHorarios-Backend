@@ -2,18 +2,28 @@ package infrastructure
 
 import "github.com/fullstacktf/ControlHorarios-Backend/api/models"
 
-func GetUser(email string, password string) models.User {
+type UserRepositoryInterface interface {
+	GetUser(email, password string) (error, models.User)
+	CreateUser(user models.User) (error, int)
+	UpdatePassword(password string, id int) error
+	UpdateUserName(id int, name string) error
+	GetAllUsers() []models.User
+}
+
+type UserRepository struct{}
+
+func (u UserRepository) GetUser(email, password string) (error, models.User) {
 	var user models.User
-	DB().Debug().Where("email = ? AND password = ?", email, password).Find(&user)
-	return user
+	result := DB().Debug().Where("email = ? AND password = ?", email, password).Find(&user)
+	return result.Error, user
 }
 
-func CreateUser(user models.User) int {
-	DB().Debug().Create(&user)
-	return user.UserID
+func (u UserRepository) CreateUser(user models.User) (error, int) {
+	result := DB().Debug().Create(&user)
+	return result.Error, user.UserID
 }
 
-func UpdatePassword(password string, id int) error {
+func (u UserRepository) UpdatePassword(password string, id int) error {
 	result := DB().Debug().
 		Model(&models.User{}).
 		Where("user_id = ?", id).
@@ -21,7 +31,7 @@ func UpdatePassword(password string, id int) error {
 	return result.Error
 }
 
-func UpdateUserName(id int, name string) error {
+func (u UserRepository) UpdateUserName(id int, name string) error {
 	result := DB().Debug().
 		Model(&models.User{}).
 		Where("users.user_id = ?", id).
@@ -32,7 +42,7 @@ func UpdateUserName(id int, name string) error {
 	return result.Error
 }
 
-func GetAllUsers() []models.User {
+func (u UserRepository) GetAllUsers() []models.User {
 	var users []models.User
 	DB().Find(&users)
 	return users
