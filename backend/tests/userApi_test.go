@@ -19,7 +19,7 @@ func TestUserLoginShouldReturn200(t *testing.T) {
 		Expect(t).
 		Body(`{
 			"Rol": "employee",
-			"SecondaryID": 2,
+			"SecondaryID": 1,
 			"UserID": 2
 		}`).
 		Status(http.StatusOK).
